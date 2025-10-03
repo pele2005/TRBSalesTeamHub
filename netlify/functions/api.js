@@ -25,7 +25,6 @@ const getPermissions = async (auth, username) => {
     const permDoc = new GoogleSpreadsheet(process.env.PERMISSION_SHEET_ID, auth);
     await permDoc.loadInfo();
     
-    // --- FIX IS HERE: Select sheet by its specific name ---
     const permSheet = permDoc.sheetsByTitle['permissionDashboard']; 
 
     if (!permSheet) {
@@ -57,7 +56,7 @@ const getPermissions = async (auth, username) => {
     console.log(`[PERMISSIONS] User "${username}" FOUND. Reading permissions from row.`);
 
     const levelUpValues = ["1MS", "1UNE", "2BA", "2BC", "2BG", "2UNE", "2US", "5BA"];
-    const smValues = ["OPH BBK1", "OPH BKK2", "OPH BKK3", "OPH UPC1", "OPH UPC2", "OPH UPC3", "ORT BKK1", "ORT BKK2", "ORT UPC1", "ORT UPC2", "OTC BKK", "OTC UPC"];
+    const smValues = ["OPH BKK1", "OPH BKK2", "OPH BKK3", "OPH UPC1", "OPH UPC2", "OPH UPC3", "ORT BKK1", "ORT BKK2", "ORT UPC1", "ORT UPC2", "OTC BKK", "OTC UPC"];
 
     for (let i = 1; i < permSheet.headerValues.length; i++) {
         const header = permSheet.headerValues[i];
