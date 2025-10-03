@@ -21,16 +21,18 @@ const getServiceAccountAuth = () => {
 };
 
 const getPermissions = async (auth, username) => {
+    console.log(`[PERMISSIONS] Starting permission lookup for user: "${username}"`);
     const permDoc = new GoogleSpreadsheet(process.env.PERMISSION_SHEET_ID, auth);
     await permDoc.loadInfo();
-    const permSheet = permDoc.sheetsByIndex[0]; // Assumes 'permissionDashboard' is the first tab
+    const permSheet = permDoc.sheetsByIndex[0]; 
 
     if (!permSheet) {
+        console.error("[PERMISSIONS] Error: Could not find the 'permissionDashboard' sheet (the first tab).");
         throw new Error("Could not find the 'permissionDashboard' sheet.");
     }
     
     const rows = await permSheet.getRows();
-    const usernameHeader = permSheet.headerValues[0]; // Assuming username is in the first column 'A'
+    const usernameHeader = permSheet.headerValues[0];
 
     const userRow = rows.find(row => 
         String(row.get(usernameHeader) || '').trim().toLowerCase() === String(username).trim().toLowerCase()
@@ -44,40 +46,41 @@ const getPermissions = async (auth, username) => {
         sm: [],
     };
     
-    // Define the lists of possible values for categorization
+    if (!userRow) {
+        console.log(`[PERMISSIONS] User "${username}" NOT FOUND in the permission sheet.`);
+        return permissions; // Return default (empty) permissions
+    }
+
+    console.log(`[PERMISSIONS] User "${username}" FOUND. Reading permissions from row.`);
+
     const levelUpValues = ["1MS", "1UNE", "2BA", "2BC", "2BG", "2UNE", "2US", "5BA"];
     const smValues = ["OPH BBK1", "OPH BKK2", "OPH BKK3", "OPH UPC1", "OPH UPC2", "OPH UPC3", "ORT BKK1", "ORT BKK2", "ORT UPC1", "ORT UPC2", "OTC BKK", "OTC UPC"];
 
-    if (userRow) {
-        // --- NEW LOGIC ---
-        // Iterate through all columns for that user, starting from the second one (index 1)
-        for (let i = 1; i < permSheet.headerValues.length; i++) {
-            const header = permSheet.headerValues[i];
-            const permissionValue = userRow.get(header);
+    for (let i = 1; i < permSheet.headerValues.length; i++) {
+        const header = permSheet.headerValues[i];
+        const permissionValue = userRow.get(header);
 
-            if (permissionValue && String(permissionValue).trim() !== '') {
-                const cleanPermission = String(permissionValue).trim();
-                
-                // Check for general permissions
-                if (cleanPermission.toLowerCase() === 'trb') {
-                    permissions.showTRB = true;
-                } else if (cleanPermission.toLowerCase() === 'nsm') {
-                    permissions.showNSM = true;
-                } else if (cleanPermission.toLowerCase() === 'admin') {
-                    permissions.showAdmin = true;
-                } 
-                // Check if it's a Level-Up permission
-                else if (levelUpValues.includes(cleanPermission)) {
-                    permissions.levelUp.push(cleanPermission);
-                }
-                // Check if it's an SM permission
-                else if (smValues.includes(cleanPermission)) {
-                    permissions.sm.push(cleanPermission);
-                }
+        if (permissionValue && String(permissionValue).trim() !== '') {
+            const cleanPermission = String(permissionValue).trim();
+            console.log(`[PERMISSIONS] Found permission value in cell: "${cleanPermission}"`);
+            
+            if (cleanPermission.toLowerCase() === 'trb') {
+                permissions.showTRB = true;
+            } else if (cleanPermission.toLowerCase() === 'nsm') {
+                permissions.showNSM = true;
+            } else if (cleanPermission.toLowerCase() === 'admin') {
+                permissions.showAdmin = true;
+            } 
+            else if (levelUpValues.includes(cleanPermission)) {
+                permissions.levelUp.push(cleanPermission);
+            }
+            else if (smValues.includes(cleanPermission)) {
+                permissions.sm.push(cleanPermission);
             }
         }
     }
-
+    
+    console.log(`[PERMISSIONS] Final permissions object for "${username}":`, JSON.stringify(permissions));
     return permissions;
 };
 
