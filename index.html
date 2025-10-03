@@ -162,42 +162,10 @@
     </div>
 
 <script>
-    // --- DATABASE SIMULATION ---
-    // In a real application, this data would come from a server.
-    const users = [
-        { username: 'Sudarat', password: 'Sudarat' },
-        { username: 'Natapol S.', password: '1111' },
-        { username: 'Ratchaneeporn S.', password: '1111' },
-        { username: 'Jitladawan S.', password: '1111' },
-        { username: 'Wichayada K.', password: '1111' },
-        { username: 'Kannika T.', password: '1111' },
-        { username: 'Waraporn P.', password: '1111' },
-        { username: 'Thitima K.', password: '1111' },
-        { username: 'Ananya C.', password: '1111' },
-        { username: 'Patcharida P.', password: '1111' },
-        { username: 'Paiwan S.', password: '1111' },
-        { username: 'Rungtiwa K.', password: '1111' },
-        { username: 'Narumon J.', password: '1111' },
-        { username: 'Natthida K.', password: '1111' },
-        { username: 'Jirapa T.', password: '1111' },
-        { username: 'Suppaluk K.', password: '1111' },
-        { username: 'Patcharin T.', password: '1111' },
-        { username: 'Natcharee D.', password: '1111' },
-        { username: 'Prapaporn S.', password: '1111' },
-        { username: 'Sudarat T.', password: '1111' },
-        { username: 'Parichat P.', password: '1111' },
-        { username: 'Thanyaporn K.', password: '20111985' },
-        { username: 'Chonthicha S.', password: '1111' },
-        { username: '1MS', password: '1111' },
-        { username: '1UNE', password: '1111' },
-        { username: '2BA', password: '1111' },
-        { username: '2BC', password: '20111985' },
-        { username: '2BG', password: '1111' },
-        { username: '2UNE', password: '1111' },
-        { username: '2US', password: '1111' },
-        { username: '5BA', password: '26101982' }
-    ];
-
+    // --- DATABASE SIMULATION (Permissions Only) ---
+    // User data is now handled by the serverless function.
+    // Permission data is still here for simplicity. To make it real-time,
+    // it would also need to be fetched from the serverless function.
     const permissions = [
         { username: 'Sudarat', permission: 'Admin' },
         { username: 'Natapol S.', permission: 'TRB' },
@@ -274,6 +242,9 @@
     const adminSection = document.getElementById('admin-section');
     const smCard = document.getElementById('sm-card');
     const levelupCard = document.getElementById('levelup-card');
+    
+    // The API endpoint for our Netlify function
+    const API_ENDPOINT = '/.netlify/functions/api';
 
     // --- Functions ---
     
@@ -282,7 +253,6 @@
             .filter(p => p.username === username)
             .map(p => p.permission);
         
-        // Reset all views first
         document.querySelectorAll('[data-permission]').forEach(el => el.classList.add('hidden'));
         salesDashboardSection.classList.add('hidden');
         adminSection.classList.add('hidden');
@@ -294,39 +264,22 @@
         let hasLevelupContent = false;
 
         userPermissions.forEach(perm => {
-            // Show Admin card
             if (perm === 'Admin') {
                 adminSection.classList.remove('hidden');
             } else {
-                hasSalesDashboardContent = true; // Any other permission means the sales dashboard should be visible
-                
-                // Show individual permission buttons
+                hasSalesDashboardContent = true;
                 const element = document.querySelector(`[data-permission="${perm}"]`);
                 if (element) {
                     element.classList.remove('hidden');
-                    
-                    // Check if this permission belongs to SM or Level-Up to show the parent card
-                    if (smCard.contains(element)) {
-                        hasSmContent = true;
-                    }
-                    if (levelupCard.contains(element)) {
-                        hasLevelupContent = true;
-                    }
+                    if (smCard.contains(element)) hasSmContent = true;
+                    if (levelupCard.contains(element)) hasLevelupContent = true;
                 }
             }
         });
         
-        // Show main containers if they have content
-        if(hasSalesDashboardContent) {
-            salesDashboardSection.classList.remove('hidden');
-        }
-        if(hasSmContent) {
-            smCard.classList.remove('hidden');
-        }
-        if(hasLevelupContent) {
-            levelupCard.classList.remove('hidden');
-        }
-
+        if(hasSalesDashboardContent) salesDashboardSection.classList.remove('hidden');
+        if(hasSmContent) smCard.classList.remove('hidden');
+        if(hasLevelupContent) levelupCard.classList.remove('hidden');
     }
 
     function showDashboard(username) {
@@ -340,29 +293,55 @@
         dashboardPage.classList.add('hidden');
         loginPage.classList.remove('hidden');
         loginForm.reset();
+        localStorage.removeItem('loggedInUser');
     }
 
     // --- Event Listeners ---
 
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // Trim whitespace from username input
         const username = e.target.username.value.trim();
         const password = e.target.password.value;
-        
-        // Convert password to string for consistent comparison
-        const user = users.find(u => u.username === username && String(u.password) === password);
+        const submitButton = e.target.querySelector('button[type="submit"]');
 
-        if (user) {
-            loginError.classList.add('hidden');
-            showDashboard(user.username);
-        } else {
+        loginError.classList.add('hidden');
+        submitButton.disabled = true;
+        submitButton.textContent = 'กำลังตรวจสอบ...';
+
+        try {
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'login', username, password })
+            });
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                localStorage.setItem('loggedInUser', username);
+                showDashboard(username);
+            } else {
+                loginError.textContent = result.message || 'Username หรือ Password ไม่ถูกต้อง';
+                loginError.classList.remove('hidden');
+            }
+        } catch (error) {
+            loginError.textContent = 'เกิดข้อผิดพลาดในการเชื่อมต่อ';
             loginError.classList.remove('hidden');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Login';
         }
     });
 
     logoutButton.addEventListener('click', () => {
         showLogin();
+    });
+    
+    // Check if user was already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+            showDashboard(loggedInUser);
+        }
     });
 
 </script>
