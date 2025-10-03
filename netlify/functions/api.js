@@ -69,7 +69,7 @@ exports.handler = async (event) => {
         if (action === 'login') {
             const doc = new GoogleSpreadsheet(process.env.USER_SHEET_ID, auth);
             await doc.loadInfo();
-            const sheet = doc.sheetsByTitle['ข้อมูลusername & password'];
+            const sheet = doc.sheetsByTitle['ข้อมูลusername & password']; // Corrected sheet name
             
             if (!sheet) {
                 throw new Error("Sheet 'ข้อมูลusername & password' not found.");
@@ -108,4 +108,5 @@ exports.handler = async (event) => {
         };
     }
 };
+
 
