@@ -1,11 +1,10 @@
-// ไฟล์นี้จะต้องอยู่ในโฟลเดอร์ netlify/functions/ ภายในโปรเจคของคุณ
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
 
-// --- ข้อมูลสำคัญที่ต้องตั้งค่าใน Environment Variables ของ Netlify ---
-// 1. GOOGLE_SERVICE_ACCOUNT_CREDS_JSON: ข้อมูล service account ในรูปแบบ JSON
-// 2. USER_SHEET_ID: ID ของ Google Sheet ที่เก็บ Username/Password (1E-1fKvOG2Yd88RM3WmTAKEzB-Ve1uBuFyDXKGc-ehXY)
-// 3. PERMISSION_SHEET_ID: ID ของ Google Sheet ที่เก็บสิทธิ์ (1LXyGjplIU6WZPF-0Ty10aOO_Dl2Kq_lO7EqdhjtZl80)
+// Environment Variables required by Netlify:
+// 1. GOOGLE_SERVICE_ACCOUNT_CREDS_JSON
+// 2. USER_SHEET_ID
+// 3. PERMISSION_SHEET_ID
 
 const getServiceAccountAuth = () => {
     try {
@@ -21,36 +20,54 @@ const getServiceAccountAuth = () => {
     }
 };
 
-// ฟังก์ชันสำหรับดึงสิทธิ์ของผู้ใช้
-const getPermissionsForUser = async (auth, username) => {
+const getPermissions = async (auth, username) => {
     const permDoc = new GoogleSpreadsheet(process.env.PERMISSION_SHEET_ID, auth);
     await permDoc.loadInfo();
-    const permSheet = permDoc.sheetsByTitle['permissionDashboard'];
-    if (!permSheet) {
-        throw new Error("Sheet 'permissionDashboard' not found.");
-    }
+    const permSheet = permDoc.sheetsByIndex[0]; // Assumes 'permissionDashboard' is the first tab
 
-    const rows = await permSheet.getRows();
-    const userPermissions = [];
+    if (!permSheet) {
+        throw new Error("Could not find the 'permissionDashboard' sheet.");
+    }
     
-    // หาแถวของผู้ใช้ที่ตรงกัน
-    const userRow = rows.find(row => String(row.get(permSheet.headerValues[0]) || '').trim() === username);
+    const rows = await permSheet.getRows();
+    const usernameHeader = permSheet.headerValues[0]; // Assuming username is in the first column 'A'
+
+    // --- FIX HERE: Made the username comparison case-insensitive ---
+    const userRow = rows.find(row => 
+        String(row.get(usernameHeader) || '').trim().toLowerCase() === String(username).trim().toLowerCase()
+    );
+
+    const permissions = {
+        showTRB: false,
+        showNSM: false,
+        showAdmin: false,
+        levelUp: [],
+        sm: [],
+    };
 
     if (userRow) {
-        // วนลูปทุกคอลัมน์ในแถวนั้นเพื่อเก็บสิทธิ์ทั้งหมด
-        permSheet.headerValues.slice(1).forEach(header => {
-            const permission = String(userRow.get(header) || '').trim();
-            if (permission) {
-                userPermissions.push(permission);
-            }
-        });
+        // Check main permissions
+        permissions.showTRB = !!userRow.get('TRB');   // Column B
+        permissions.showNSM = !!userRow.get('NSM');   // Column C
+        permissions.showAdmin = !!userRow.get('Admin'); // Column F
+
+        // Gather specific permissions for Level-Up and SM
+        const levelUpHeader = 'Level-Up'; // Column D
+        const smHeader = 'SM';         // Column E
+
+        if (userRow.get(levelUpHeader)) {
+            permissions.levelUp.push(userRow.get(levelUpHeader).trim());
+        }
+        if (userRow.get(smHeader)) {
+            permissions.sm.push(userRow.get(smHeader).trim());
+        }
     }
 
-    return userPermissions;
+    return permissions;
 };
 
 
-exports.handler = async (event) => {
+exports.handler = async (event, context) => {
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
@@ -58,7 +75,7 @@ exports.handler = async (event) => {
     };
     
     if (event.httpMethod === 'OPTIONS') {
-        return { statusCode: 204, headers, body: '' };
+        return { statusCode: 200, headers, body: JSON.stringify({ message: 'Successful preflight call.' }) };
     }
 
     try {
@@ -67,36 +84,40 @@ exports.handler = async (event) => {
         const auth = getServiceAccountAuth();
 
         if (action === 'login') {
-            const doc = new GoogleSpreadsheet(process.env.USER_SHEET_ID, auth);
-            await doc.loadInfo();
-            // --- CHANGE HERE: Use index instead of title ---
-            const sheet = doc.sheetsByIndex[0]; 
+            const { username, password } = payload;
             
-            if (!sheet) {
-                // This error is less likely now, but kept for safety
-                throw new Error("Could not find the first sheet in the Google Sheets file.");
+            // 1. Authenticate user
+            const userDoc = new GoogleSpreadsheet(process.env.USER_SHEET_ID, auth);
+            await userDoc.loadInfo();
+            const userSheet = userDoc.sheetsByIndex[0]; // Assumes user data is in the first sheet
+             if (!userSheet) {
+                throw new Error("Could not find the user sheet.");
             }
+            const userRows = await userSheet.getRows();
+            const userHeader = userSheet.headerValues[0]; // 'Cost_center'
+            const passHeader = userSheet.headerValues[1]; // 'password'
 
-            const rows = await sheet.getRows();
-            const userHeader = sheet.headerValues[0]; // 'Cost_center'
-            const passHeader = sheet.headerValues[1]; // 'password'
-
-            const user = rows.find(row => 
-                String(row.get(userHeader) || '').trim() === String(payload.username).trim() && 
-                String(row.get(passHeader) || '').trim() === String(payload.password).trim()
+            const user = userRows.find(row => 
+                String(row.get(userHeader) || '').trim().toLowerCase() === String(username).trim().toLowerCase() && 
+                String(row.get(passHeader) || '').trim() === String(password).trim()
             );
 
-            if (user) {
-                // ถ้า login สำเร็จ ให้ดึงสิทธิ์ (permissions) ต่อ
-                const permissions = await getPermissionsForUser(auth, payload.username);
-                return { 
-                    statusCode: 200, 
-                    headers, 
-                    body: JSON.stringify({ success: true, permissions: permissions }) 
-                };
-            } else {
-                return { statusCode: 401, headers, body: JSON.stringify({ success: false, message: 'Cost Center หรือรหัสผ่านไม่ถูกต้อง' }) };
+            if (!user) {
+                 return { statusCode: 401, headers, body: JSON.stringify({ success: false, message: 'Username หรือ Password ไม่ถูกต้อง' }) };
             }
+
+            // 2. Get permissions for the authenticated user
+            const permissions = await getPermissions(auth, username);
+
+            return { 
+                statusCode: 200, 
+                headers, 
+                body: JSON.stringify({ 
+                    success: true,
+                    username: user.get(userHeader), // Return the correct-cased username
+                    permissions: permissions 
+                }) 
+            };
         }
 
         return { statusCode: 400, headers, body: JSON.stringify({ success: false, message: 'Invalid action' }) };
@@ -110,6 +131,4 @@ exports.handler = async (event) => {
         };
     }
 };
-
-
 
