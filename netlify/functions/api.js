@@ -24,11 +24,14 @@ const getPermissions = async (auth, username) => {
     console.log(`[PERMISSIONS] Starting permission lookup for user: "${username}"`);
     const permDoc = new GoogleSpreadsheet(process.env.PERMISSION_SHEET_ID, auth);
     await permDoc.loadInfo();
-    const permSheet = permDoc.sheetsByIndex[0]; 
+    
+    // --- FIX IS HERE: Select sheet by its specific name ---
+    const permSheet = permDoc.sheetsByTitle['permissionDashboard']; 
 
     if (!permSheet) {
-        console.error("[PERMISSIONS] Error: Could not find the 'permissionDashboard' sheet (the first tab).");
-        throw new Error("Could not find the 'permissionDashboard' sheet.");
+        const errorMessage = "Error: Could not find a sheet with the exact name 'permissionDashboard'.";
+        console.error(`[PERMISSIONS] ${errorMessage}`);
+        throw new Error(errorMessage);
     }
     
     const rows = await permSheet.getRows();
@@ -48,7 +51,7 @@ const getPermissions = async (auth, username) => {
     
     if (!userRow) {
         console.log(`[PERMISSIONS] User "${username}" NOT FOUND in the permission sheet.`);
-        return permissions; // Return default (empty) permissions
+        return permissions;
     }
 
     console.log(`[PERMISSIONS] User "${username}" FOUND. Reading permissions from row.`);
