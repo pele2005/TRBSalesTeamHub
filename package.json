@@ -1,0 +1,15 @@
+{
+  "name": "sales-team-hub-functions",
+  "version": "1.0.0",
+  "description": "Netlify functions for Sales Team Hub",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pele'",
+  "license": "ISC",
+  "dependencies": {
+    "google-auth-library": "^9.0.0",
+    "google-spreadsheet": "^4.1.1"
+  }
+}
