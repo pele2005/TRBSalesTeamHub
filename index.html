@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Team Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        .link-button {
+            @apply block w-full text-center p-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-blue-100 hover:text-blue-800 transition-all duration-200 text-sm font-medium;
+        }
+        .main-button {
+            @apply block w-full text-left p-4 rounded-lg transition-all duration-200 font-semibold;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <!-- Login Page -->
+    <div id="login-page" class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white p-8 rounded-xl shadow-lg">
+            <h1 class="text-3xl font-bold text-slate-700 text-center mb-2">Sales Team Hub</h1>
+            <p class="text-slate-500 text-center mb-6">กรุณาลงชื่อเข้าใช้งาน</p>
+            <form id="login-form">
+                <div class="space-y-4">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-slate-600">Username</label>
+                        <input type="text" id="username" name="username" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-slate-600">Password</label>
+                        <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                </div>
+                <p id="login-error" class="text-red-500 text-sm mt-2 hidden">Username หรือ Password ไม่ถูกต้อง</p>
+                <button type="submit" class="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                    Login
+                </button>
+            </form>
+        </div>
+        <p class="text-center text-slate-500 mt-6 text-sm">By Pele'</p>
+    </div>
+
+    <!-- Dashboard Page (Hidden by default) -->
+    <div id="dashboard-page" class="hidden">
+        <!-- Header -->
+        <header class="bg-white shadow-md sticky top-0 z-10">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-slate-700">Sales Team Hub</h1>
+                    <p class="text-slate-500">ศูนย์รวมเครื่องมือและรายงานสำหรับทีม</p>
+                </div>
+                <div>
+                    <span id="welcome-user" class="text-slate-600 mr-4"></span>
+                    <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="container mx-auto p-4 md:p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+                <!-- Sales Dashboard Card (Content is dynamic) -->
+                <div id="sales-dashboard-card" class="bg-white rounded-xl shadow-lg overflow-hidden flex-col hidden">
+                    <div class="p-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-slate-700">Sales Dashboard</h2>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 flex-grow">
+                        <div class="space-y-4">
+                            <a id="trb-button" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" rel="noopener noreferrer" class="block w-full text-left p-3 rounded-lg bg-blue-100 hover:bg-blue-200 transition-all duration-200 font-medium hidden">TRB</a>
+                            <a id="nsm-button" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" rel="noopener noreferrer" class="block w-full text-left p-3 rounded-lg bg-blue-100 hover:bg-blue-200 transition-all duration-200 font-medium hidden">NSM</a>
+                            
+                            <!-- SM Group (Content is dynamic) -->
+                            <div id="sm-group" class="hidden">
+                                <h3 class="font-semibold text-slate-600 mb-2 mt-4">SM</h3>
+                                <div id="sm-links" class="grid grid-cols-2 gap-2">
+                                    <a data-permission="OPH BBK1" href="https://lookerstudio.google.com/s/nf5e9ofQTuY" target="_blank" rel="noopener noreferrer" class="link-button hidden">OPH BBK1</a>
+                                    <a data-permission="OPH BKK2" href="https://lookerstudio.google.com/s/nLjU8vYLBjU" target="_blank" rel="noopener noreferrer" class="link-button hidden">OPH BKK2</a>
+                                    <a data-permission="OPH BKK3" href="https://lookerstudio.google.com/s/ieT7jRp5MVE" target="_blank" rel="noopener noreferrer" class="link-button hidden">OPH BKK3</a>
+                                    <a data-permission="OPH UPC1" href="https://lookerstudio.google.com/s/jsaNc5ovXnM" target="_blank" rel="noopener noreferrer" class="link-button hidden">OPH UPC1</a>
+                                    <a data-permission="OPH UPC2" href="https://lookerstudio.google.com/s/hrBNpZrg05A" target="_blank" rel="noopener noreferrer" class="link-button hidden">OPH UPC2</a>
+                                    <a data-permission="OPH UPC3" href="https://lookerstudio.google.com/s/rxUZpnsLFt8" target="_blank" rel="noopener noreferrer" class="link-button hidden">OPH UPC3</a>
+                                    <a data-permission="ORT BKK1" href="https://lookerstudio.google.com/s/tPqpj7eqjVc" target="_blank" rel="noopener noreferrer" class="link-button hidden">ORT BKK1</a>
+                                    <a data-permission="ORT BKK2" href="https://lookerstudio.google.com/s/o0WZZ5eydZk" target="_blank" rel="noopener noreferrer" class="link-button hidden">ORT BKK2</a>
+                                    <a data-permission="ORT UPC1" href="https://lookerstudio.google.com/s/sa1_WyEamRY" target="_blank" rel="noopener noreferrer" class="link-button hidden">ORT UPC1</a>
+                                    <a data-permission="ORT UPC2" href="https://lookerstudio.google.com/s/gbjxehvpVQ8" target="_blank" rel="noopener noreferrer" class="link-button hidden">ORT UPC2</a>
+                                    <a data-permission="OTC BKK" href="https://lookerstudio.google.com/s/ls0kNEMzk8s" target="_blank" rel="noopener noreferrer" class="link-button hidden">OTC BKK</a>
+                                    <a data-permission="OTC UPC" href="https://lookerstudio.google.com/s/oECb4s4seqI" target="_blank" rel="noopener noreferrer" class="link-button hidden">OTC UPC</a>
+                                </div>
+                            </div>
+
+                            <!-- Level-Up Group (Content is dynamic) -->
+                            <div id="levelup-group" class="hidden">
+                                <h3 class="font-semibold text-slate-600 mb-2 mt-4">Level-Up</h3>
+                                <div id="levelup-links" class="grid grid-cols-2 gap-2">
+                                    <a data-permission="1MS" href="https://lookerstudio.google.com/s/qH7eSvWOJBI" target="_blank" rel="noopener noreferrer" class="link-button hidden">1MS</a>
+                                    <a data-permission="1UNE" href="https://lookerstudio.google.com/s/jU5JfmVE2gQ" target="_blank" rel="noopener noreferrer" class="link-button hidden">1UNE</a>
+                                    <a data-permission="2BA" href="https://lookerstudio.google.com/s/jdVAYExToVo" target="_blank" rel="noopener noreferrer" class="link-button hidden">2BA</a>
+                                    <a data-permission="2BC" href="https://lookerstudio.google.com/s/hksXRkLiMDw" target="_blank" rel="noopener noreferrer" class="link-button hidden">2BC</a>
+                                    <a data-permission="2BG" href="https://lookerstudio.google.com/s/qMzt9jdB34s" target="_blank" rel="noopener noreferrer" class="link-button hidden">2BG</a>
+                                    <a data-permission="2UNE" href="https://lookerstudio.google.com/s/hmHcsmK_8WY" target="_blank" rel="noopener noreferrer" class="link-button hidden">2UNE</a>
+                                    <a data-permission="2US" href="https://lookerstudio.google.com/s/nahDbiRvob4" target="_blank" rel="noopener noreferrer" class="link-button hidden">2US</a>
+                                    <a data-permission="5BA" href="https://lookerstudio.google.com/s/lSaID-lPEXk" target="_blank" rel="noopener noreferrer" class="link-button hidden">5BA</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column Cards (Some are dynamic) -->
+                <div class="space-y-8">
+                    <!-- Expense Card (Always visible) -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-green-100 p-3 rounded-full">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-700">Expense</h2>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <div class="flex flex-col space-y-3">
+                                <a href="https://peletotalexpense.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-green-50 hover:bg-green-100 text-green-800">Expense Report</a>
+                                <a href="https://pendingexpense.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-green-50 hover:bg-green-100 text-green-800">Pending Expense</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Calculation Card (Always visible) -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                         <div class="p-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-yellow-100 p-3 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-700">Price Calculation</h2>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <div class="flex flex-col space-y-3">
+                                <a href="https://pelerp.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800">Reimburse Price</a>
+                                <a href="https://pelecostcgd.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800">Cost Price</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Card (Dynamic) -->
+                    <div id="admin-card" class="bg-white rounded-xl shadow-lg overflow-hidden hidden">
+                        <div class="p-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-red-100 p-3 rounded-full">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-700">Admin</h2>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <div class="flex flex-col space-y-3">
+                                <a href="https://uploadgooglesheet.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Sales Dashboard</a>
+                                <a href="https://upload2.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Expense</a>
+                                <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Doctor Adoption</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row for Training (Always visible) -->
+            <div class="mt-8">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-purple-100 p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222 4 2.222V20M12 12.778L16 15l-4 2.222L8 15l4-2.222z" /></svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-slate-700">Training</h2>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <div class="space-y-3">
+                            <a href="https://trb-ethic-th.netlify.app/" target="_blank" rel="noopener noreferrer" class="main-button bg-purple-50 hover:bg-purple-100 text-purple-800">Ethic of Sales and Marketing Practice</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center py-4">
+            <p class="text-slate-500 text-sm">By Pele'</p>
+        </footer>
+    </div>
+
+<script>
+    // --- DATABASE SIMULATION ---
+// ... existing code ... -->
+
