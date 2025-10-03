@@ -107,18 +107,18 @@ exports.handler = async (event, context) => {
             }
 
             // --- FIX IS HERE ---
-            // Get the official username from the authenticated user record.
+            // Get permissions using the username from the login payload, since getPermissions is case-insensitive.
+            const permissions = await getPermissions(auth, username);
+            
+            // Get the correctly-cased username from the sheet to display in the UI.
             const officialUsername = user.get(userHeader);
-
-            // 2. Get permissions using the OFFICIAL username from the user sheet.
-            const permissions = await getPermissions(auth, officialUsername);
 
             return { 
                 statusCode: 200, 
                 headers, 
                 body: JSON.stringify({ 
                     success: true,
-                    username: officialUsername, // Return the official username
+                    username: officialUsername, // Return the official username for display
                     permissions: permissions 
                 }) 
             };
