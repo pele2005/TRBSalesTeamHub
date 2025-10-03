@@ -32,7 +32,7 @@ const getPermissions = async (auth, username) => {
     const rows = await permSheet.getRows();
     const usernameHeader = permSheet.headerValues[0]; // Assuming username is in the first column 'A'
 
-    // --- FIX HERE: Made the username comparison case-insensitive ---
+    // Find user row using case-insensitive comparison
     const userRow = rows.find(row => 
         String(row.get(usernameHeader) || '').trim().toLowerCase() === String(username).trim().toLowerCase()
     );
@@ -106,15 +106,19 @@ exports.handler = async (event, context) => {
                  return { statusCode: 401, headers, body: JSON.stringify({ success: false, message: 'Username หรือ Password ไม่ถูกต้อง' }) };
             }
 
-            // 2. Get permissions for the authenticated user
-            const permissions = await getPermissions(auth, username);
+            // --- FIX IS HERE ---
+            // Get the official username from the authenticated user record.
+            const officialUsername = user.get(userHeader);
+
+            // 2. Get permissions using the OFFICIAL username from the user sheet.
+            const permissions = await getPermissions(auth, officialUsername);
 
             return { 
                 statusCode: 200, 
                 headers, 
                 body: JSON.stringify({ 
                     success: true,
-                    username: user.get(userHeader), // Return the correct-cased username
+                    username: officialUsername, // Return the official username
                     permissions: permissions 
                 }) 
             };
