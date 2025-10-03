@@ -385,7 +385,8 @@
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const username = e.target.username.value;
+        // Trim whitespace from username input to prevent login errors from accidental spaces
+        const username = e.target.username.value.trim();
         const password = e.target.password.value;
         
         const user = users.find(u => u.username === username && u.password === password);
@@ -414,4 +415,5 @@
 
 </body>
 </html>
+
 
