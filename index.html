@@ -210,5 +210,208 @@
 
 <script>
     // --- DATABASE SIMULATION ---
-// ... existing code ... -->
+    // In a real application, this data would come from a secure backend server, not hardcoded in the frontend.
+    
+    // User credentials (username & password)
+    const users = [
+        { username: "Ananya C.", password: "password" },
+        { username: "Ratchaneeporn S.", password: "password" },
+        { username: "Sudarat", password: "password" },
+        { username: "Natapol S.", password: "password" },
+        { username: "5BA", password: "password" },
+        { username: "TRB", password: "password" },
+        { username: "NSM", password: "password" },
+        { username: "OPH BBK1", password: "password" },
+        { username: "OPH BKK2", password: "password" },
+        { username: "OPH BKK3", password: "password" },
+        { username: "OPH UPC1", password: "password" },
+        { username: "OPH UPC2", password: "password" },
+        { username: "OPH UPC3", password: "password" },
+        { username: "ORT BKK1", password: "password" },
+        { username: "ORT BKK2", password: "password" },
+        { username: "ORT UPC1", password: "password" },
+        { username: "ORT UPC2", password: "password" },
+        { username: "OTC BKK", password: "password" },
+        { username: "OTC UPC", password: "password" },
+        { username: "1MS", password: "password" },
+        { username: "1UNE", password: "password" },
+        { username: "2BA", password: "password" },
+        { username: "2BC", password: "password" },
+        { username: "2BG", password: "password" },
+        { username: "2UNE", password: "password" },
+        { username: "2US", password: "password" },
+        { username: "no_permission_user", password: "password" } // Example user with no special permissions
+    ];
+
+    // User permissions
+    const permissions = {
+        'Ananya C.':    { trb: true, nsm: false, levelUp: [], sm: ['OPH UPC3'], admin: false },
+        'Ratchaneeporn S.': { trb: true, nsm: true,  levelUp: [], sm: [], admin: false },
+        'Sudarat':      { trb: false,nsm: false, levelUp: [], sm: [], admin: true },
+        'Natapol S.':   { trb: true, nsm: true,  levelUp: [], sm: [], admin: true },
+        '5BA':          { trb: true, nsm: false, levelUp: ['5BA'], sm: [], admin: false },
+        'TRB':          { trb: true, nsm: false, levelUp: [], sm: [], admin: false },
+        'NSM':          { trb: false,nsm: true,  levelUp: [], sm: [], admin: false },
+        'OPH BBK1':     { trb: false,nsm: false, levelUp: [], sm: ['OPH BBK1'], admin: false },
+        'OPH BKK2':     { trb: false,nsm: false, levelUp: [], sm: ['OPH BKK2'], admin: false },
+        'OPH BKK3':     { trb: false,nsm: false, levelUp: [], sm: ['OPH BKK3'], admin: false },
+        'OPH UPC1':     { trb: false,nsm: false, levelUp: [], sm: ['OPH UPC1'], admin: false },
+        'OPH UPC2':     { trb: false,nsm: false, levelUp: [], sm: ['OPH UPC2'], admin: false },
+        'OPH UPC3':     { trb: false,nsm: false, levelUp: [], sm: ['OPH UPC3'], admin: false },
+        'ORT BKK1':     { trb: false,nsm: false, levelUp: [], sm: ['ORT BKK1'], admin: false },
+        'ORT BKK2':     { trb: false,nsm: false, levelUp: [], sm: ['ORT BKK2'], admin: false },
+        'ORT UPC1':     { trb: false,nsm: false, levelUp: [], sm: ['ORT UPC1'], admin: false },
+        'ORT UPC2':     { trb: false,nsm: false, levelUp: [], sm: ['ORT UPC2'], admin: false },
+        'OTC BKK':      { trb: false,nsm: false, levelUp: [], sm: ['OTC BKK'], admin: false },
+        'OTC UPC':      { trb: false,nsm: false, levelUp: [], sm: ['OTC UPC'], admin: false },
+        '1MS':          { trb: false,nsm: false, levelUp: ['1MS'], sm: [], admin: false },
+        '1UNE':         { trb: false,nsm: false, levelUp: ['1UNE'], sm: [], admin: false },
+        '2BA':          { trb: false,nsm: false, levelUp: ['2BA'], sm: [], admin: false },
+        '2BC':          { trb: false,nsm: false, levelUp: ['2BC'], sm: [], admin: false },
+        '2BG':          { trb: false,nsm: false, levelUp: ['2BG'], sm: [], admin: false },
+        '2UNE':         { trb: false,nsm: false, levelUp: ['2UNE'], sm: [], admin: false },
+        '2US':          { trb: false,nsm: false, levelUp: ['2US'], sm: [], admin: false }
+    };
+
+    // --- DOM Elements ---
+    const loginPage = document.getElementById('login-page');
+    const dashboardPage = document.getElementById('dashboard-page');
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+    const logoutButton = document.getElementById('logout-button');
+    const welcomeUser = document.getElementById('welcome-user');
+
+    // --- Functions ---
+    
+    function showDashboard(username) {
+        loginPage.classList.add('hidden');
+        dashboardPage.classList.remove('hidden');
+        sessionStorage.setItem('loggedInUser', username);
+        renderDashboard(username);
+    }
+
+    function showLoginPage() {
+        dashboardPage.classList.add('hidden');
+        loginPage.classList.remove('hidden');
+        sessionStorage.removeItem('loggedInUser');
+    }
+
+    function renderDashboard(username) {
+        welcomeUser.textContent = `Welcome, ${username}`;
+        const userPermissions = permissions[username] || { trb: false, nsm: false, levelUp: [], sm: [], admin: false };
+        let hasSalesDashboardContent = false;
+
+        // Admin Card
+        const adminCard = document.getElementById('admin-card');
+        if (userPermissions.admin) {
+            adminCard.classList.remove('hidden');
+        } else {
+            adminCard.classList.add('hidden');
+        }
+
+        // --- Sales Dashboard Permissions ---
+        // TRB Button
+        const trbButton = document.getElementById('trb-button');
+        if (userPermissions.trb) {
+            trbButton.classList.remove('hidden');
+            hasSalesDashboardContent = true;
+        } else {
+            trbButton.classList.add('hidden');
+        }
+        
+        // NSM Button
+        const nsmButton = document.getElementById('nsm-button');
+        if (userPermissions.nsm) {
+            nsmButton.classList.remove('hidden');
+            hasSalesDashboardContent = true;
+        } else {
+            nsmButton.classList.add('hidden');
+        }
+
+        // SM Links
+        const smGroup = document.getElementById('sm-group');
+        const smLinks = document.getElementById('sm-links').querySelectorAll('a');
+        let hasSmContent = false;
+        smLinks.forEach(link => {
+            if (userPermissions.sm && userPermissions.sm.includes(link.dataset.permission)) {
+                link.classList.remove('hidden');
+                hasSmContent = true;
+            } else {
+                link.classList.add('hidden');
+            }
+        });
+        
+        if(hasSmContent) {
+            smGroup.classList.remove('hidden');
+            hasSalesDashboardContent = true;
+        } else {
+            smGroup.classList.add('hidden');
+        }
+
+
+        // LevelUp Links
+        const levelupGroup = document.getElementById('levelup-group');
+        const levelupLinks = document.getElementById('levelup-links').querySelectorAll('a');
+        let hasLevelupContent = false;
+        levelupLinks.forEach(link => {
+            if (userPermissions.levelUp && userPermissions.levelUp.includes(link.dataset.permission)) {
+                link.classList.remove('hidden');
+                hasLevelupContent = true;
+            } else {
+                link.classList.add('hidden');
+            }
+        });
+
+        if(hasLevelupContent) {
+            levelupGroup.classList.remove('hidden');
+            hasSalesDashboardContent = true;
+        } else {
+            levelupGroup.classList.add('hidden');
+        }
+
+        // Show Sales Dashboard card only if it has any content
+        const salesDashboardCard = document.getElementById('sales-dashboard-card');
+        if (hasSalesDashboardContent) {
+            salesDashboardCard.classList.remove('hidden');
+            salesDashboardCard.style.display = 'flex';
+        } else {
+            salesDashboardCard.classList.add('hidden');
+            salesDashboardCard.style.display = 'none';
+        }
+    }
+
+
+    // --- Event Listeners ---
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+        
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+            loginError.classList.add('hidden');
+            showDashboard(user.username);
+        } else {
+            loginError.classList.remove('hidden');
+        }
+    });
+
+    logoutButton.addEventListener('click', () => {
+        showLoginPage();
+    });
+
+    // --- Initial Load ---
+    
+    // Check if user is already logged in from a previous session
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+        showDashboard(loggedInUser);
+    }
+
+</script>
+
+</body>
+</html>
 
