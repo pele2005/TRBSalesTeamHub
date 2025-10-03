@@ -69,10 +69,12 @@ exports.handler = async (event) => {
         if (action === 'login') {
             const doc = new GoogleSpreadsheet(process.env.USER_SHEET_ID, auth);
             await doc.loadInfo();
-            const sheet = doc.sheetsByTitle['ข้อมูลusername & password']; // Corrected sheet name
+            // --- CHANGE HERE: Use index instead of title ---
+            const sheet = doc.sheetsByIndex[0]; 
             
             if (!sheet) {
-                throw new Error("Sheet 'ข้อมูลusername & password' not found.");
+                // This error is less likely now, but kept for safety
+                throw new Error("Could not find the first sheet in the Google Sheets file.");
             }
 
             const rows = await sheet.getRows();
@@ -108,5 +110,6 @@ exports.handler = async (event) => {
         };
     }
 };
+
 
 
