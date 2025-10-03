@@ -165,36 +165,36 @@
     // --- DATABASE SIMULATION ---
     // In a real application, this data would come from a server.
     const users = [
-        { username: 'Sudarat', password: 'password' },
-        { username: 'Natapol S.', password: 'password' },
-        { username: 'Ratchaneeporn S.', password: 'password' },
-        { username: 'Jitladawan S.', password: 'password' },
-        { username: 'Wichayada K.', password: 'password' },
-        { username: 'Kannika T.', password: 'password' },
-        { username: 'Waraporn P.', password: 'password' },
-        { username: 'Thitima K.', password: 'password' },
-        { username: 'Ananya C.', password: 'password' },
-        { username: 'Patcharida P.', password: 'password' },
-        { username: 'Paiwan S.', password: 'password' },
-        { username: 'Rungtiwa K.', password: 'password' },
-        { username: 'Narumon J.', password: 'password' },
-        { username: 'Natthida K.', password: 'password' },
-        { username: 'Jirapa T.', password: 'password' },
-        { username: 'Suppaluk K.', password: 'password' },
-        { username: 'Patcharin T.', password: 'password' },
-        { username: 'Natcharee D.', password: 'password' },
-        { username: 'Prapaporn S.', password: 'password' },
-        { username: 'Sudarat T.', password: 'password' },
-        { username: 'Parichat P.', password: 'password' },
-        { username: 'Thanyaporn K.', password: 'password' },
-        { username: 'Chonthicha S.', password: 'password' },
-        { username: '1MS', password: 'password' },
-        { username: '1UNE', password: 'password' },
-        { username: '2BA', password: 'password' },
+        { username: 'Sudarat', password: 'Sudarat' },
+        { username: 'Natapol S.', password: '1111' },
+        { username: 'Ratchaneeporn S.', password: '1111' },
+        { username: 'Jitladawan S.', password: '1111' },
+        { username: 'Wichayada K.', password: '1111' },
+        { username: 'Kannika T.', password: '1111' },
+        { username: 'Waraporn P.', password: '1111' },
+        { username: 'Thitima K.', password: '1111' },
+        { username: 'Ananya C.', password: '1111' },
+        { username: 'Patcharida P.', password: '1111' },
+        { username: 'Paiwan S.', password: '1111' },
+        { username: 'Rungtiwa K.', password: '1111' },
+        { username: 'Narumon J.', password: '1111' },
+        { username: 'Natthida K.', password: '1111' },
+        { username: 'Jirapa T.', password: '1111' },
+        { username: 'Suppaluk K.', password: '1111' },
+        { username: 'Patcharin T.', password: '1111' },
+        { username: 'Natcharee D.', password: '1111' },
+        { username: 'Prapaporn S.', password: '1111' },
+        { username: 'Sudarat T.', password: '1111' },
+        { username: 'Parichat P.', password: '1111' },
+        { username: 'Thanyaporn K.', password: '20111985' },
+        { username: 'Chonthicha S.', password: '1111' },
+        { username: '1MS', password: '1111' },
+        { username: '1UNE', password: '1111' },
+        { username: '2BA', password: '1111' },
         { username: '2BC', password: '20111985' },
-        { username: '2BG', password: 'password' },
-        { username: '2UNE', password: 'password' },
-        { username: '2US', password: 'password' },
+        { username: '2BG', password: '1111' },
+        { username: '2UNE', password: '1111' },
+        { username: '2US', password: '1111' },
         { username: '5BA', password: '26101982' }
     ];
 
@@ -350,7 +350,8 @@
         const username = e.target.username.value.trim();
         const password = e.target.password.value;
         
-        const user = users.find(u => u.username === username && u.password === password);
+        // Convert password to string for consistent comparison
+        const user = users.find(u => u.username === username && String(u.password) === password);
 
         if (user) {
             loginError.classList.add('hidden');
