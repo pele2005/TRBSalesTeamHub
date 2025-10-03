@@ -12,7 +12,7 @@
         body { font-family: 'Sarabun', sans-serif; }
         .card {
             background-color: white;
-            border-radius: 0.75rem;
+            border-radius: 0.75rem; /* 12px */
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
@@ -75,28 +75,30 @@
 
         <!-- Main Content -->
         <main class="container mx-auto p-4 md:p-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
 
-                <!-- Sales Dashboard Card -->
-                <div id="sales-dashboard-card" class="card hidden">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <div class="bg-blue-100 p-3 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                <!-- Sales Dashboard Card (Spans 2 columns on medium screens and up) -->
+                <div id="sales-dashboard-card" class="card hidden md:col-span-2">
+                    <div class="p-6">
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-slate-700">Sales Dashboard</h2>
                         </div>
-                        <h2 class="text-xl font-bold text-slate-700">Sales Dashboard</h2>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                           <a id="btn-trb" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="hidden main-button bg-blue-50 hover:bg-blue-100 text-blue-800">TRB</a>
-                           <a id="btn-nsm" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="hidden main-button bg-blue-50 hover:bg-blue-100 text-blue-800">NSM</a>
-                        </div>
-                        <div id="sm-section" class="hidden pt-2">
-                           <h3 class="font-semibold text-slate-600 mb-2 mt-4">SM</h3>
-                           <div id="sm-buttons-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
-                        </div>
-                        <div id="levelup-section" class="hidden pt-2">
-                           <h3 class="font-semibold text-slate-600 mb-2 mt-4">Level-Up</h3>
-                           <div id="levelup-buttons-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                               <a id="btn-trb" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="hidden main-button bg-blue-50 hover:bg-blue-100 text-blue-800">TRB</a>
+                               <a id="btn-nsm" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="hidden main-button bg-blue-50 hover:bg-blue-100 text-blue-800">NSM</a>
+                            </div>
+                            <div id="sm-section" class="hidden pt-2">
+                               <h3 class="font-semibold text-slate-600 mb-2 mt-4">SM</h3>
+                               <div id="sm-buttons-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+                            </div>
+                            <div id="levelup-section" class="hidden pt-2">
+                               <h3 class="font-semibold text-slate-600 mb-2 mt-4">Level-Up</h3>
+                               <div id="levelup-buttons-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,52 +107,62 @@
                 <div class="space-y-6">
                     <!-- Expense -->
                     <div class="card">
-                        <div class="flex items-center space-x-4 mb-6">
-                            <div class="bg-green-100 p-3 rounded-full">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-4 mb-6">
+                                <div class="bg-green-100 p-3 rounded-full">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-700">Expense</h2>
                             </div>
-                            <h2 class="text-xl font-bold text-slate-700">Expense</h2>
+                            <a href="https://peletotalexpense.netlify.app/" target="_blank" class="main-button bg-green-50 hover:bg-green-100 text-green-800">Expense Report</a>
                         </div>
-                        <a href="https://peletotalexpense.netlify.app/" target="_blank" class="main-button bg-green-50 hover:bg-green-100 text-green-800">Expense Report</a>
                     </div>
                     <!-- Price Calculation -->
                     <div class="card">
-                        <div class="flex items-center space-x-4 mb-6">
-                            <div class="bg-yellow-100 p-3 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-4 mb-6">
+                                <div class="bg-yellow-100 p-3 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                                </div>
+                                 <h2 class="text-xl font-bold text-slate-700">Price Calculation</h2>
                             </div>
-                             <h2 class="text-xl font-bold text-slate-700">Price Calculation</h2>
-                        </div>
-                        <div class="flex flex-col space-y-3">
-                            <a href="https://pelerp.netlify.app/" target="_blank" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800">Reimburse Price</a>
-                            <a href="https://pelecostcgd.netlify.app/" target="_blank" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800">Cost Price</a>
+                            <div class="flex flex-col space-y-3">
+                                <a href="https://pelerp.netlify.app/" target="_blank" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800">Reimburse Price</a>
+                                <a href="https://pelecostcgd.netlify.app/" target="_blank" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800">Cost Price</a>
+                            </div>
                         </div>
                     </div>
                     <!-- Admin -->
                     <div id="admin-card" class="card hidden">
-                        <div class="flex items-center space-x-4 mb-6">
-                             <div class="bg-red-100 p-3 rounded-full">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-4 mb-6">
+                                 <div class="bg-red-100 p-3 rounded-full">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-700">Admin</h2>
                             </div>
-                            <h2 class="text-xl font-bold text-slate-700">Admin</h2>
-                        </div>
-                         <div class="flex flex-col space-y-3">
-                            <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Sales Dashboard</a>
-                            <a href="https://upload2.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Expense</a>
-                            <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Doctor Adoption</a>
+                             <div class="flex flex-col space-y-3">
+                                <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Sales Dashboard</a>
+                                <a href="https://upload2.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Expense</a>
+                                <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Doctor Adoption</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Training Card (Full Width) -->
-                <div class="lg:col-span-2 card">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <div class="bg-purple-100 p-3 rounded-full">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222 4 2.222V20M12 12.778L16 15l-4 2.222L8 15l4-2.222z" /></svg>
+            <!-- Training Card (Full Width, below main grid) -->
+            <div class="mt-6">
+                <div class="card">
+                    <div class="p-6">
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="bg-purple-100 p-3 rounded-full">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222 4 2.222V20M12 12.778L16 15l-4 2.222L8 15l4-2.222z" /></svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-slate-700">Training</h2>
                         </div>
-                        <h2 class="text-xl font-bold text-slate-700">Training</h2>
+                        <a href="https://trb-ethic-th.netlify.app/" target="_blank" class="main-button bg-purple-50 hover:bg-purple-100 text-purple-800">Ethic of Sales and Marketing Practice</a>
                     </div>
-                    <a href="https://trb-ethic-th.netlify.app/" target="_blank" class="main-button bg-purple-50 hover:bg-purple-100 text-purple-800">Ethic of Sales and Marketing Practice</a>
                 </div>
             </div>
         </main>
