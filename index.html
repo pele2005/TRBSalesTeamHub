@@ -3,121 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PELE Sales Team Hub</title>
+    <title>TRB Sales Team Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Sarabun', sans-serif; }
-        .link-button { @apply block w-full text-center p-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-blue-100 hover:text-blue-800 transition-all duration-200 text-sm font-medium; }
-        .main-button { @apply block w-full text-left p-4 rounded-lg transition-all duration-200 font-semibold shadow-sm border; }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8fafc;
+        }
+        .hidden { display: none; }
+        .link-button {
+            @apply block w-full text-center p-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-blue-100 hover:text-blue-800 transition-all duration-200 text-sm font-medium border border-transparent shadow-sm;
+        }
+        .main-card {
+            @apply bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all hover:shadow-md;
+        }
+        .admin-button {
+            @apply block w-full text-left p-4 rounded-xl transition-all duration-200 font-bold shadow-sm border border-red-200 bg-red-50 text-red-800 hover:bg-red-100;
+        }
+        .action-button {
+            @apply block w-full text-left p-4 rounded-xl transition-all duration-200 font-semibold shadow-sm border border-slate-200 bg-slate-50 hover:bg-slate-100;
+        }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800">
+<body class="text-slate-800">
 
-    <header class="bg-white shadow-md sticky top-0 z-10">
-        <div class="container mx-auto px-6 py-4">
-            <h1 class="text-2xl md:text-3xl font-bold text-slate-700">PELE Sales Team Hub</h1>
-            <p class="text-slate-500">ศูนย์รวมเครื่องมือและรายงานสำหรับทีม</p>
+    <!-- Login Section -->
+    <div id="login-page" class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white p-8 rounded-3xl shadow-2xl border border-slate-100">
+            <div class="text-center mb-8">
+                <div class="inline-block p-4 bg-blue-50 rounded-2xl mb-4 text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-slate-800">TRB Sales Team Hub</h1>
+                <p class="text-slate-500 mt-2">กรุณาเข้าสู่ระบบด้วยรหัส Cost Center</p>
+            </div>
+
+            <form id="login-form" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Username (Cost_center)</label>
+                    <input type="text" id="username" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300" placeholder="ระบุ Cost Center" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300" placeholder="ระบุรหัสผ่าน" required>
+                </div>
+                <div id="login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-3 rounded-xl border border-red-100 animate-pulse">
+                    Username หรือ Password ไม่ถูกต้อง
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transform active:scale-[0.98] transition-all shadow-lg shadow-blue-200">
+                    เข้าสู่ระบบ
+                </button>
+            </form>
         </div>
-    </header>
+        <p class="mt-8 text-slate-400 text-sm font-semibold italic text-center">By Pele'</p>
+    </div>
 
-    <main class="container mx-auto p-4 md:p-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-
-            <!-- Sales Dashboard -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
-                <div class="p-6 border-b">
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-blue-100 p-3 rounded-full">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                        </div>
-                        <h2 class="text-xl font-bold text-slate-700">Sales Dashboard</h2>
+    <!-- Dashboard Section -->
+    <div id="dashboard-page" class="hidden min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+            <div class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2.5 rounded-xl text-white shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2 2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 leading-tight">TRB Sales Team Hub</h1>
+                        <p id="welcome-user" class="text-xs font-bold text-blue-600 uppercase tracking-widest"></p>
                     </div>
                 </div>
-                <div class="p-6 space-y-4">
-                    <a href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="block w-full text-left p-3 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-800 font-bold border border-sky-200">TRB</a>
-                    <a href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="block w-full text-left p-3 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-800 font-bold border border-sky-200">NSM</a>
-                    <a href="https://dailysalesdashboard.netlify.app/" target="_blank" class="block w-full text-left p-3 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-900 transition-all duration-200 font-bold border border-sky-200 italic underline">DSD (Daily Sales Dashboard)</a>
-                    
-                    <div class="p-4 rounded-lg border border-slate-200">
-                        <h3 class="font-semibold text-slate-600 mb-3">SM</h3>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                            <a href="https://lookerstudio.google.com/s/nf5e9ofQTuY" target="_blank" class="link-button">OPH BBK1</a>
-                            <a href="https://lookerstudio.google.com/s/nLjU8vYLBjU" target="_blank" class="link-button">OPH BKK2</a>
-                            <a href="https://lookerstudio.google.com/s/ieT7jRp5MVE" target="_blank" class="link-button">OPH BKK3</a>
-                            <a href="https://lookerstudio.google.com/s/jsaNc5ovXnM" target="_blank" class="link-button">OPH UPC1</a>
-                            <a href="https://lookerstudio.google.com/s/hrBNpZrg05A" target="_blank" class="link-button">OPH UPC2</a>
-                            <a href="https://lookerstudio.google.com/s/rxUZpnsLFt8" target="_blank" class="link-button">OPH UPC3</a>
-                            <a href="https://lookerstudio.google.com/s/tPqpj7eqjVc" target="_blank" class="link-button">ORT BKK1</a>
-                            <a href="https://lookerstudio.google.com/s/o0WZZ5eydZk" target="_blank" class="link-button">ORT BKK2</a>
-                            <a href="https://lookerstudio.google.com/s/sa1_WyEamRY" target="_blank" class="link-button">ORT UPC1</a>
-                            <a href="https://lookerstudio.google.com/s/gbjxehvpVQ8" target="_blank" class="link-button">ORT UPC2</a>
-                            <a href="https://lookerstudio.google.com/s/ls0kNEMzk8s" target="_blank" class="link-button">OTC BKK</a>
-                            <a href="https://lookerstudio.google.com/s/oECb4s4seqI" target="_blank" class="link-button">OTC UPC</a>
+                <button id="logout-button" class="text-slate-400 hover:text-red-600 p-2 transition-all hover:bg-red-50 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto p-4 md:p-8 flex-grow">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- Left Section: Sales Dashboard -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="main-card p-6">
+                        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
+                            <span class="w-2 h-6 bg-blue-600 rounded-full mr-3"></span>
+                            Sales Dashboard
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <!-- High Level Buttons -->
+                            <a data-permission="NSM" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all shadow-sm">NSM Report</a>
+                            <a data-permission="TRB" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all shadow-sm">TRB Report</a>
+                            
+                            <!-- DSD Public Button (แสดงสำหรับทุกคนที่ล็อกอิน) -->
+                            <a href="https://dailysalesdashboard.netlify.app/" target="_blank" class="block w-full p-5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold shadow-xl hover:scale-[1.01] transition-all flex justify-between items-center italic">
+                                <span>DSD (Daily Sales Dashboard)</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                            </a>
+
+                            <!-- SM Group -->
+                            <div id="sm-card" class="hidden mt-8 border-t border-slate-100 pt-6">
+                                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.25em] mb-4">SM Region Reports</h3>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                    <a data-permission="OPH BBK1" href="https://lookerstudio.google.com/s/nf5e9ofQTuY" target="_blank" class="link-button hidden">OPH BBK1</a>
+                                    <a data-permission="OPH BKK2" href="https://lookerstudio.google.com/s/nLjU8vYLBjU" target="_blank" class="link-button hidden">OPH BKK2</a>
+                                    <a data-permission="OPH BKK3" href="https://lookerstudio.google.com/s/ieT7jRp5MVE" target="_blank" class="link-button hidden">OPH BKK3</a>
+                                    <a data-permission="OPH UPC1" href="https://lookerstudio.google.com/s/jsaNc5ovXnM" target="_blank" class="link-button hidden">OPH UPC1</a>
+                                    <a data-permission="OPH UPC2" href="https://lookerstudio.google.com/s/hrBNpZrg05A" target="_blank" class="link-button hidden">OPH UPC2</a>
+                                    <a data-permission="OPH UPC3" href="https://lookerstudio.google.com/s/rxUZpnsLFt8" target="_blank" class="link-button hidden">OPH UPC3</a>
+                                    <a data-permission="ORT BKK1" href="https://lookerstudio.google.com/s/tPqpj7eqjVc" target="_blank" class="link-button hidden">ORT BKK1</a>
+                                    <a data-permission="ORT BKK2" href="https://lookerstudio.google.com/s/o0WZZ5eydZk" target="_blank" class="link-button hidden">ORT BKK2</a>
+                                    <a data-permission="ORT UPC1" href="https://lookerstudio.google.com/s/sa1_WyEamRY" target="_blank" class="link-button hidden">ORT UPC1</a>
+                                    <a data-permission="ORT UPC2" href="https://lookerstudio.google.com/s/gbjxehvpVQ8" target="_blank" class="link-button hidden">ORT UPC2</a>
+                                    <a data-permission="OTC BKK" href="https://lookerstudio.google.com/s/ls0kNEMzk8s" target="_blank" class="link-button hidden">OTC BKK</a>
+                                    <a data-permission="OTC UPC" href="https://lookerstudio.google.com/s/oECb4s4seqI" target="_blank" class="link-button hidden">OTC UPC</a>
+                                </div>
+                            </div>
+
+                            <!-- Level-Up Group -->
+                            <div id="levelup-card" class="hidden mt-6 border-t border-slate-100 pt-6 text-center">
+                                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.25em] mb-4 text-left">Level-Up Reports</h3>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                    <a data-permission="1MS" href="https://lookerstudio.google.com/s/qH7eSvWOJBI" target="_blank" class="link-button hidden">1MS</a>
+                                    <a data-permission="1UNE" href="https://lookerstudio.google.com/s/jU5JfmVE2gQ" target="_blank" class="link-button hidden">1UNE</a>
+                                    <a data-permission="2BA" href="https://lookerstudio.google.com/s/jdVAYExToVo" target="_blank" class="link-button hidden">2BA</a>
+                                    <a data-permission="2BC" href="https://lookerstudio.google.com/s/hksXRkLiMDw" target="_blank" class="link-button hidden">2BC</a>
+                                    <a data-permission="2BG" href="https://lookerstudio.google.com/s/qMzt9jdB34s" target="_blank" class="link-button hidden">2BG</a>
+                                    <a data-permission="2UNE" href="https://lookerstudio.google.com/s/hmHcsmK_8WY" target="_blank" class="link-button hidden">2UNE</a>
+                                    <a data-permission="2US" href="https://lookerstudio.google.com/s/nahDbiRvob4" target="_blank" class="link-button hidden">2US</a>
+                                    <a data-permission="5BA" href="https://lookerstudio.google.com/s/lSaID-lPEXk" target="_blank" class="link-button hidden">5BA</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="p-4 rounded-lg border border-slate-200">
-                        <h3 class="font-semibold text-slate-600 mb-3">Level-Up</h3>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                            <a href="https://lookerstudio.google.com/s/qH7eSvWOJBI" target="_blank" class="link-button">1MS</a>
-                            <a href="https://lookerstudio.google.com/s/jU5JfmVE2gQ" target="_blank" class="link-button">1UNE</a>
-                            <a href="https://lookerstudio.google.com/s/jdVAYExToVo" target="_blank" class="link-button">2BA</a>
-                            <a href="https://lookerstudio.google.com/s/hksXRkLiMDw" target="_blank" class="link-button">2BC</a>
-                            <a href="https://lookerstudio.google.com/s/qMzt9jdB34s" target="_blank" class="link-button">2BG</a>
-                            <a href="https://lookerstudio.google.com/s/hmHcsmK_8WY" target="_blank" class="link-button">2UNE</a>
-                            <a href="https://lookerstudio.google.com/s/nahDbiRvob4" target="_blank" class="link-button">2US</a>
-                            <a href="https://lookerstudio.google.com/s/lSaID-lPEXk" target="_blank" class="link-button">5BA</a>
-                        </div>
+                <!-- Right Section: Tools & Admin -->
+                <div class="space-y-6">
+                    <div class="main-card p-6 space-y-4">
+                        <h2 class="text-lg font-bold text-slate-800 mb-2">General Tools</h2>
+                        <a href="https://peletotalexpense.netlify.app/" target="_blank" class="action-button border-green-100 text-green-700 bg-green-50/50 hover:bg-green-100">Expense Report</a>
+                        <a href="https://pelerp.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100">Reimburse Price</a>
+                        <a href="https://pelecostcgd.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100">Cost Price</a>
+                    </div>
+
+                    <!-- Admin Section (Only for Admin) -->
+                    <div id="admin-section" class="hidden main-card p-6 border-red-200 bg-red-50/20 space-y-4">
+                        <h2 class="text-lg font-bold text-red-600 mb-2 flex items-center italic">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
+                            Admin Controls
+                        </h2>
+                        <a href="https://script.google.com/macros/s/AKfycbwK8QNsVHKO-Mp-6sc46-fdX0QWv1yYau5uOfCi-bJ1ofxG91yf9RiR7GgMx2kyXRwAUQ/exec" target="_blank" class="admin-button italic text-center text-red-900 border-red-300">Upload Daily Sales (DSD)</a>
+                        <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="action-button border-red-100">Upload Sales Dashboard</a>
+                        <a href="https://upload2.netlify.app/" target="_blank" class="action-button border-red-100">Upload Expense</a>
+                        <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="action-button border-red-100">Upload Doctor Adoption</a>
+                    </div>
+                </div>
+
+                <!-- Training -->
+                <div class="lg:col-span-3">
+                    <div class="main-card p-6 border-purple-100 bg-purple-50/10">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                            Training Center
+                        </h2>
+                        <a href="https://trb-ethic-th.netlify.app/" target="_blank" class="action-button border-purple-200 text-purple-800 bg-purple-50 hover:bg-purple-100 font-bold text-center">Ethic of Sales and Marketing Practice</a>
                     </div>
                 </div>
             </div>
+        </main>
 
-            <!-- Column 2 -->
-            <div class="space-y-8">
-                <!-- Expense -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-6 border-b"><h2 class="text-xl font-bold text-slate-700">Expense</h2></div>
-                    <div class="p-6 space-y-3 flex flex-col">
-                        <a href="https://peletotalexpense.netlify.app/" target="_blank" class="main-button bg-green-50 hover:bg-green-100 text-green-800 border-green-200">Expense Report</a>
-                    </div>
-                </div>
+        <footer class="text-center py-10 border-t border-slate-200 bg-white">
+            <p class="text-slate-400 text-sm font-semibold italic">By Pele'</p>
+        </footer>
+    </div>
 
-                <!-- Price Calculation -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-6 border-b"><h2 class="text-xl font-bold text-slate-700">Price Calculation</h2></div>
-                    <div class="p-6 space-y-3 flex flex-col">
-                        <a href="https://pelerp.netlify.app/" target="_blank" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800 border-yellow-200">Reimburse Price</a>
-                        <a href="https://pelecostcgd.netlify.app/" target="_blank" class="main-button bg-yellow-50 hover:bg-yellow-100 text-yellow-800 border-yellow-200">Cost Price</a>
-                    </div>
-                </div>
+<script>
+    // --- DATABASE ---
+    const users = [
+        { username: 'Sudarat', password: 'Sudarat' },
+        { username: 'Natapol S.', password: '1111' },
+        { username: 'Ratchaneeporn S.', password: '1111' },
+        { username: 'Jitladawan S.', password: '1111' },
+        { username: 'Wichayada K.', password: '1111' },
+        { username: 'Kannika T.', password: '1111' },
+        { username: 'Waraporn P.', password: '1111' },
+        { username: 'Thitima K.', password: '1111' },
+        { username: 'Ananya C.', password: '1111' },
+        { username: 'Patcharida P.', password: '1111' },
+        { username: 'Paiwan S.', password: '1111' },
+        { username: 'Rungtiwa K.', password: '1111' },
+        { username: 'Narumon J.', password: '1111' },
+        { username: 'Natthida K.', password: '1111' },
+        { username: 'Jirapa T.', password: '1111' },
+        { username: 'Suppaluk K.', password: '1111' },
+        { username: 'Patcharin T.', password: '1111' },
+        { username: 'Natcharee D.', password: '1111' },
+        { username: 'Prapaporn S.', password: '1111' },
+        { username: 'Sudarat T.', password: '1111' },
+        { username: 'Parichat P.', password: '1111' },
+        { username: 'Thanyaporn K.', password: '1111' },
+        { username: 'Chonthicha S.', password: '1111' },
+        { username: '1MS', password: '1111' },
+        { username: '1UNE', password: '1111' },
+        { username: '2BA', password: '1111' },
+        { username: '2BC', password: '20111985' },
+        { username: '2BG', password: '1111' },
+        { username: '2UNE', password: '1111' },
+        { username: '2US', password: '1111' },
+        { username: '5BA', password: '26101982' }
+    ];
 
-                <!-- Admin -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-6 border-b"><h2 class="text-xl font-bold text-slate-700">Admin</h2></div>
-                    <div class="p-6 space-y-3 flex flex-col">
-                        <a href="https://script.google.com/macros/s/AKfycbwK8QNsVHKO-Mp-6sc46-fdX0QWv1yYau5uOfCi-bJ1ofxG91yf9RiR7GgMx2kyXRwAUQ/exec" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-900 font-bold border-red-200 italic">Upload Daily Sales Dashboard (DSD)</a>
-                        <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800 border-red-100">Upload Sales Dashboard</a>
-                        <a href="https://upload2.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800 border-red-100">Upload Expense</a>
-                        <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800 border-red-100">Upload Doctor Adoption</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    const permissions = [
+        { username: 'Sudarat', perm: 'Admin' },
+        { username: 'Natapol S.', perm: 'TRB' },
+        { username: 'Natapol S.', perm: 'NSM' },
+        { username: 'Natapol S.', perm: 'Admin' },
+        { username: 'Ratchaneeporn S.', perm: 'TRB' },
+        { username: 'Ratchaneeporn S.', perm: 'NSM' },
+        { username: 'Jitladawan S.', perm: 'TRB' },
+        { username: 'Jitladawan S.', perm: 'NSM' },
+        { username: 'Wichayada K.', perm: 'TRB' },
+        { username: 'Wichayada K.', perm: 'NSM' },
+        { username: 'Kannika T.', perm: 'TRB' },
+        { username: 'Kannika T.', perm: 'NSM' },
+        { username: 'Waraporn P.', perm: 'TRB' },
+        { username: 'Waraporn P.', perm: 'OPH BKK1' },
+        { username: 'Thitima K.', perm: 'TRB' },
+        { username: 'Thitima K.', perm: 'OPH BKK2' },
+        { username: 'Ananya C.', perm: 'TRB' },
+        { username: 'Ananya C.', perm: 'OPH UPC3' },
+        { username: 'Patcharida P.', perm: 'TRB' },
+        { username: 'Patcharida P.', perm: 'OPH BKK3' },
+        { username: 'Paiwan S.', perm: 'TRB' },
+        { username: 'Paiwan S.', perm: 'OPH UPC1' },
+        { username: 'Rungtiwa K.', perm: 'TRB' },
+        { username: 'Rungtiwa K.', perm: 'OPH UPC2' },
+        { username: 'Narumon J.', perm: 'TRB' },
+        { username: 'Narumon J.', perm: 'ORT BKK1' },
+        { username: 'Natthida K.', perm: 'TRB' },
+        { username: 'Natthida K.', perm: 'ORT BKK2' },
+        { username: 'Jirapa T.', perm: 'TRB' },
+        { username: 'Jirapa T.', perm: 'ORT UPC1' },
+        { username: 'Suppaluk K.', perm: 'TRB' },
+        { username: 'Suppaluk K.', perm: 'ORT UPC2' },
+        { username: 'Patcharin T.', perm: 'TRB' },
+        { username: 'Patcharin T.', perm: 'OTC BKK' },
+        { username: 'Natcharee D.', perm: 'TRB' },
+        { username: 'Natcharee D.', perm: 'OTC UPC' },
+        { username: 'Prapaporn S.', perm: 'TRB' },
+        { username: 'Prapaporn S.', perm: '1MS' },
+        { username: 'Sudarat T.', perm: 'TRB' },
+        { username: 'Sudarat T.', perm: '1UNE' },
+        { username: 'Parichat P.', perm: 'TRB' },
+        { username: 'Parichat P.', perm: '2BA' },
+        { username: 'Thanyaporn K.', perm: 'TRB' },
+        { username: 'Thanyaporn K.', perm: '2BC' },
+        { username: 'Chonthicha S.', perm: 'TRB' },
+        { username: 'Chonthicha S.', perm: '2BG' },
+        { username: '1MS', perm: 'TRB' },
+        { username: '1MS', perm: '1MS' },
+        { username: '1UNE', perm: 'TRB' },
+        { username: '1UNE', perm: '1UNE' },
+        { username: '2BA', perm: 'TRB' },
+        { username: '2BA', perm: '2BA' },
+        { username: '2BC', perm: 'TRB' },
+        { username: '2BC', perm: '2BC' },
+        { username: '2BG', perm: 'TRB' },
+        { username: '2BG', perm: '2BG' },
+        { username: '2UNE', perm: 'TRB' },
+        { username: '2UNE', perm: '2UNE' },
+        { username: '2US', perm: 'TRB' },
+        { username: '2US', perm: '2US' },
+        { username: '5BA', perm: 'TRB' },
+        { username: '5BA', perm: '5BA' }
+    ];
 
-        <div class="mt-8 bg-white rounded-xl shadow-lg overflow-hidden">
-            <div class="p-6 border-b"><h2 class="text-xl font-bold text-slate-700">Training</h2></div>
-            <div class="p-6">
-                <a href="https://trb-ethic-th.netlify.app/" target="_blank" class="main-button bg-purple-50 hover:bg-purple-100 text-purple-800 border-purple-200 text-center">Ethic of Sales and Marketing Practice</a>
-            </div>
-        </div>
-    </main>
+    // --- LOGIC ---
+    const loginPage = document.getElementById('login-page');
+    const dashboardPage = document.getElementById('dashboard-page');
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+    const welcomeUser = document.getElementById('welcome-user');
+    const logoutBtn = document.getElementById('logout-button');
+    const smCard = document.getElementById('sm-card');
+    const levelupCard = document.getElementById('levelup-card');
+    const adminSection = document.getElementById('admin-section');
 
-    <footer class="text-center py-8">
-        <p class="text-slate-500 text-sm italic">By Pele'</p>
-    </footer>
+    function setupUI(username) {
+        const userPerms = permissions.filter(p => p.username === username).map(p => p.perm);
+        
+        // Reset visibility
+        document.querySelectorAll('[data-permission]').forEach(el => el.classList.add('hidden'));
+        adminSection.classList.add('hidden');
+        smCard.classList.add('hidden');
+        levelupCard.classList.add('hidden');
 
+        let hasSm = false;
+        let hasLv = false;
+
+        userPerms.forEach(p => {
+            if (p === 'Admin') {
+                adminSection.classList.remove('hidden');
+            } else {
+                const targetElements = document.querySelectorAll(`[data-permission="${p}"]`);
+                targetElements.forEach(el => {
+                    el.classList.remove('hidden');
+                    if (smCard.contains(el)) hasSm = true;
+                    if (levelupCard.contains(el)) hasLv = true;
+                });
+            }
+        });
+
+        if (hasSm) smCard.classList.remove('hidden');
+        if (hasLv) levelupCard.classList.remove('hidden');
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value;
+        
+        const found = users.find(user => user.username === u && String(user.password) === p);
+
+        if (found) {
+            loginError.classList.add('hidden');
+            loginPage.classList.add('hidden');
+            dashboardPage.classList.remove('hidden');
+            welcomeUser.textContent = `ยินดีต้อนรับ: ${found.username}`;
+            setupUI(found.username);
+            window.scrollTo(0,0);
+        } else {
+            loginError.classList.remove('hidden');
+        }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+        dashboardPage.classList.add('hidden');
+        loginPage.classList.remove('hidden');
+        loginForm.reset();
+        window.scrollTo(0,0);
+    });
+</script>
 </body>
 </html>
