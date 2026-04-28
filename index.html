@@ -46,11 +46,11 @@
             <form id="login-form" class="space-y-5">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">Username (Cost_center)</label>
-                    <input type="text" id="username" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300" placeholder="ระบุ Cost Center" required>
+                    <input type="text" id="username" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300" placeholder="ระบุ Cost Center" required autocomplete="username">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="password" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300" placeholder="ระบุรหัสผ่าน" required>
+                    <input type="password" id="password" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300" placeholder="ระบุรหัสผ่าน" required autocomplete="current-password">
                 </div>
                 <div id="login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-3 rounded-xl border border-red-100 animate-pulse">
                     Username หรือ Password ไม่ถูกต้อง
@@ -76,7 +76,13 @@
                     </div>
                     <div>
                         <h1 class="text-xl font-bold text-slate-800 leading-tight">TRB Sales Team Hub</h1>
-                        <p id="welcome-user" class="text-xs font-bold text-blue-600 uppercase tracking-widest"></p>
+                        <div class="flex items-center mt-0.5">
+                            <span class="flex h-2 w-2 mr-2">
+                                <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            </span>
+                            <p id="welcome-user" class="text-xs font-bold text-blue-600 uppercase tracking-widest"></p>
+                        </div>
                     </div>
                 </div>
                 <button id="logout-button" class="text-slate-400 hover:text-red-600 p-2 transition-all hover:bg-red-50 rounded-full">
@@ -150,7 +156,7 @@
                 <!-- Right Section: Tools & Admin -->
                 <div class="space-y-6">
                     <div class="main-card p-6 space-y-4">
-                        <h2 class="text-lg font-bold text-slate-800 mb-2">General Tools</h2>
+                        <h2 class="text-lg font-bold text-slate-800 mb-2 font-bold">General Tools</h2>
                         <a href="https://peletotalexpense.netlify.app/" target="_blank" class="action-button border-green-100 text-green-700 bg-green-50/50 hover:bg-green-100">Expense Report</a>
                         <a href="https://pelerp.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100">Reimburse Price</a>
                         <a href="https://pelecostcgd.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100">Cost Price</a>
@@ -172,7 +178,7 @@
                 <!-- Training -->
                 <div class="lg:col-span-3">
                     <div class="main-card p-6 border-purple-100 bg-purple-50/10">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center font-bold">
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                             Training Center
                         </h2>
@@ -330,16 +336,21 @@
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        // เพิ่ม .trim() เพื่อล้างค่าว่างด้านหน้าและหลัง ทั้ง Username และ Password
         const u = document.getElementById('username').value.trim();
-        const p = document.getElementById('password').value;
+        const p = document.getElementById('password').value.trim();
         
-        const found = users.find(user => user.username === u && String(user.password) === p);
+        // ตรวจสอบข้อมูลโดยไม่จำกัด Case-sensitive สำหรับ Username
+        const found = users.find(user => 
+            user.username.toLowerCase() === u.toLowerCase() && 
+            String(user.password) === p
+        );
 
         if (found) {
             loginError.classList.add('hidden');
             loginPage.classList.add('hidden');
             dashboardPage.classList.remove('hidden');
-            welcomeUser.textContent = `ยินดีต้อนรับ: ${found.username}`;
+            welcomeUser.textContent = `Cost Center: ${found.username}`;
             setupUI(found.username);
             window.scrollTo(0,0);
         } else {
