@@ -40,17 +40,17 @@
                     </svg>
                 </div>
                 <h1 class="text-3xl font-bold text-slate-800 tracking-tight">TRB Sales Team Hub</h1>
-                <p class="text-slate-500 mt-2 font-medium">เข้าสู่ระบบด้วยรหัส Cost Center ของท่าน</p>
+                <p class="text-slate-500 mt-2 font-medium">กรุณาเข้าสู่ระบบด้วยรหัส Cost Center ของท่าน</p>
             </div>
 
             <form id="login-form" class="space-y-5">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">Username (Cost_center)</label>
-                    <input type="text" id="username_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300 shadow-sm" placeholder="ระบุ Cost Center" required autocomplete="username">
+                    <input type="text" id="username_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300 shadow-sm" placeholder="ระบุ Cost Center" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="password_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300 shadow-sm" placeholder="ระบุรหัสผ่าน" required autocomplete="current-password">
+                    <input type="password" id="password_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300 shadow-sm" placeholder="ระบุรหัสผ่าน" required>
                 </div>
                 <div id="login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-3 rounded-xl border border-red-100 animate-pulse">
                     Username หรือ Password ไม่ถูกต้อง
@@ -106,7 +106,7 @@
                         </h2>
                         
                         <div class="space-y-4">
-                            <!-- High Level Buttons -->
+                            <!-- Reports -->
                             <a data-permission="NSM" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all shadow-sm">NSM Report</a>
                             <a data-permission="TRB" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all shadow-sm">TRB Report</a>
                             
@@ -166,12 +166,12 @@
                     <div id="admin-section-ui" class="hidden main-card p-6 border-red-200 bg-red-50/20 space-y-4">
                         <h2 class="text-lg font-bold text-red-600 mb-2 flex items-center italic">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
-                            Admin Only
+                            Admin Controls
                         </h2>
                         <a href="https://script.google.com/macros/s/AKfycbwK8QNsVHKO-Mp-6sc46-fdX0QWv1yYau5uOfCi-bJ1ofxG91yf9RiR7GgMx2kyXRwAUQ/exec" target="_blank" class="admin-button italic text-center text-red-900 border-red-300">Upload Daily Sales (DSD)</a>
-                        <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="action-button border-red-100 font-medium">Upload Sales Dashboard</a>
-                        <a href="https://upload2.netlify.app/" target="_blank" class="action-button border-red-100 font-medium">Upload Expense</a>
-                        <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="action-button border-red-100 font-medium">Upload Doctor Adoption</a>
+                        <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="action-button border-red-100 font-medium text-red-800">Upload Sales Dashboard</a>
+                        <a href="https://upload2.netlify.app/" target="_blank" class="action-button border-red-100 font-medium text-red-800">Upload Expense</a>
+                        <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="action-button border-red-100 font-medium text-red-800">Upload Doctor Adoption</a>
                     </div>
                 </div>
 
@@ -276,53 +276,57 @@
 
     // --- APP FUNCTIONS ---
     function setupUserPermissions(username) {
-        // หา Permission ของ User
+        // หา Permission ของ User (เปรียบเทียบชื่อให้ตรงกัน)
         const userPerms = permissions.filter(p => p.username === username).map(p => p.perm);
         
-        // ซ่อนปุ่มทั้งหมดก่อน
+        // รีเซ็ตการซ่อนปุ่มรายงานทั้งหมด
         document.querySelectorAll('[data-permission]').forEach(el => el.classList.add('hidden'));
         
-        // ซ่อนกรอบหลักก่อน
+        // ซ่อนกรอบหลักก่อนเสมอ
         if (adminSectionUI) adminSectionUI.classList.add('hidden');
         if (smSection) smSection.classList.add('hidden');
         if (levelupSection) levelupSection.classList.add('hidden');
 
-        let hasSM = false;
-        let hasLV = false;
+        let hasSMVisible = false;
+        let hasLVVisible = false;
 
         userPerms.forEach(p => {
             if (p === 'Admin') {
                 if (adminSectionUI) adminSectionUI.classList.remove('hidden');
             } else {
+                // แสดงปุ่มที่มีสิทธิ์ตรงกัน
                 const targetElements = document.querySelectorAll(`[data-permission="${p}"]`);
                 targetElements.forEach(el => {
                     el.classList.remove('hidden');
-                    // ถ้ามีปุ่มใน SM หรือ LevelUp ให้เปิดกรอบหลัก
-                    if (smSection && smSection.contains(el)) hasSM = true;
-                    if (levelupSection && levelupSection.contains(el)) hasLV = true;
+                    // ถ้าพบปุ่มใน SM หรือ Level-Up ให้จำไว้เพื่อเปิดหัวข้อกลุ่ม
+                    if (smSection && smSection.contains(el)) hasSMVisible = true;
+                    if (levelupSection && levelupSection.contains(el)) hasLVVisible = true;
                 });
             }
         });
 
-        if (hasSM && smSection) smSection.classList.remove('hidden');
-        if (hasLV && levelupSection) levelupSection.classList.remove('hidden');
+        // แสดงกรอบกลุ่มถ้ามีข้อมูลภายในอย่างน้อย 1 อย่าง
+        if (hasSMVisible && smSection) smSection.classList.remove('hidden');
+        if (hasLVVisible && levelupSection) levelupSection.classList.remove('hidden');
     }
 
     // --- EVENT LISTENERS ---
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); 
+            event.preventDefault(); // ป้องกันหน้าเว็บรีโหลด
             
+            // อ่านค่าและตัดช่องว่าง
             const userInput = document.getElementById('username_input').value.trim();
             const passInput = document.getElementById('password_input').value.trim();
             
-            // ตรวจสอบ Login (Username ไม่สนตัวเล็กตัวใหญ่ / Password แปลงเป็น String เสมอ)
+            // ค้นหาผู้ใช้ (Case-insensitive สำหรับ Username และรองรับรหัสผ่านที่เป็นตัวเลข)
             const foundUser = users.find(u => 
                 u.username.toLowerCase() === userInput.toLowerCase() && 
                 String(u.password) === passInput
             );
 
             if (foundUser) {
+                // กรณีผ่าน
                 loginError.classList.add('hidden');
                 loginPage.classList.add('hidden');
                 dashboardPage.classList.remove('hidden');
@@ -332,8 +336,11 @@
                 
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
+                // กรณีไม่ผ่าน
                 loginError.classList.remove('hidden');
-                document.getElementById('password_input').value = ""; 
+                // ล้างรหัสผ่านเพื่อให้ลองใหม่ได้ง่ายขึ้น
+                document.getElementById('password_input').value = "";
+                document.getElementById('password_input').focus();
             }
         });
     }
@@ -347,7 +354,7 @@
         });
     }
 
-    // เมื่อหน้าเว็บโหลดเสร็จ
+    // เมื่อโหลดหน้าเว็บเสร็จ ให้โฟกัสที่ช่องชื่อผู้ใช้
     window.onload = () => {
         const uInput = document.getElementById('username_input');
         if (uInput) uInput.focus();
