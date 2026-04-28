@@ -9,10 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f8fafc;
-        }
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8fafc; }
         .hidden { display: none; }
         .link-button {
             @apply block w-full text-center p-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-blue-100 hover:text-blue-800 transition-all duration-200 text-sm font-medium border border-transparent shadow-sm;
@@ -21,7 +18,7 @@
             @apply bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all hover:shadow-md;
         }
         .admin-button {
-            @apply block w-full text-left p-4 rounded-xl transition-all duration-200 font-bold shadow-sm border border-red-200 bg-red-50 text-red-800 hover:bg-red-100;
+            @apply block w-full text-left p-4 rounded-xl transition-all duration-200 font-bold shadow-sm border border-red-200 bg-red-50 text-red-900 hover:bg-red-100;
         }
         .action-button {
             @apply block w-full text-left p-4 rounded-xl transition-all duration-200 font-semibold shadow-sm border border-slate-200 bg-slate-50 hover:bg-slate-100;
@@ -30,7 +27,7 @@
 </head>
 <body class="text-slate-800">
 
-    <!-- Login Section -->
+    <!-- Login Page -->
     <div id="login-page" class="min-h-screen flex flex-col items-center justify-center p-4">
         <div class="max-w-md w-full bg-white p-8 rounded-3xl shadow-2xl border border-slate-100">
             <div class="text-center mb-8">
@@ -39,80 +36,62 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                 </div>
-                <h1 class="text-3xl font-bold text-slate-800 tracking-tight">TRB Sales Team Hub</h1>
-                <p class="text-slate-500 mt-2 font-medium">กรุณาเข้าสู่ระบบด้วยรหัส Cost Center ของท่าน</p>
+                <h1 class="text-3xl font-bold text-slate-800">TRB Sales Team Hub</h1>
+                <p class="text-slate-500 mt-2">กรุณาเข้าสู่ระบบด้วยรหัส Cost Center</p>
             </div>
 
             <form id="login-form" class="space-y-5">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">Username (Cost_center)</label>
-                    <input type="text" id="username_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300 shadow-sm" placeholder="ระบุ Cost Center" required autocomplete="username">
+                    <input type="text" id="username_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" placeholder="ระบุ Cost Center" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="password_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder-slate-300 shadow-sm" placeholder="ระบุรหัสผ่าน" required autocomplete="current-password">
+                    <input type="password" id="password_input" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" placeholder="ระบุรหัสผ่าน" required>
                 </div>
-                <div id="login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-3 rounded-xl border border-red-100 animate-pulse">
+                <div id="login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-3 rounded-xl border border-red-100">
                     Username หรือ Password ไม่ถูกต้อง
                 </div>
-                <button type="submit" id="login-submit-btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transform active:scale-[0.98] transition-all shadow-lg shadow-blue-200">
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 shadow-lg transition-all active:scale-[0.98]">
                     เข้าสู่ระบบ
                 </button>
             </form>
         </div>
-        <p class="mt-8 text-slate-400 text-sm font-semibold italic text-center">By Pele'</p>
+        <p class="mt-8 text-slate-400 text-sm font-semibold italic">By Pele'</p>
     </div>
 
-    <!-- Dashboard Section -->
+    <!-- Dashboard Page -->
     <div id="dashboard-page" class="hidden min-h-screen flex flex-col">
         <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
             <div class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-blue-600 p-2.5 rounded-xl text-white shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2 2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-slate-800 leading-tight">TRB Sales Team Hub</h1>
-                        <div class="flex items-center mt-0.5">
-                            <span class="flex h-2 w-2 mr-2">
-                                <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                            </span>
-                            <p id="welcome-user-text" class="text-xs font-bold text-blue-600 uppercase tracking-widest"></p>
-                        </div>
-                    </div>
+                    <div class="bg-blue-600 p-2 rounded-lg text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2 2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
+                    <div><h1 class="text-xl font-bold text-slate-800">TRB Sales Team Hub</h1><p id="welcome-user" class="text-xs font-bold text-blue-600 uppercase"></p></div>
                 </div>
-                <button id="logout-button" class="text-slate-400 hover:text-red-600 p-2 transition-all hover:bg-red-50 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                </button>
+                <button id="logout-button" class="text-slate-400 hover:text-red-600 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg></button>
             </div>
         </header>
 
         <main class="container mx-auto p-4 md:p-8 flex-grow">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Left: Sales Dashboard -->
+
+                <!-- Sales Dashboard Section -->
                 <div class="lg:col-span-2 space-y-6">
                     <div class="main-card p-6">
-                        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
-                            <span class="w-2 h-6 bg-blue-600 rounded-full mr-3"></span>
-                            Sales Dashboard
-                        </h2>
-                        
+                        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center"><span class="w-2 h-6 bg-blue-600 rounded-full mr-3"></span>Sales Dashboard</h2>
                         <div class="space-y-4">
-                            <a data-permission="NSM" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all shadow-sm">NSM Report</a>
-                            <a data-permission="TRB" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all shadow-sm">TRB Report</a>
+                            <a data-permission="TRB" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all">TRB Report</a>
+                            <a data-permission="NSM" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="hidden block w-full p-4 rounded-xl bg-sky-50 text-sky-800 font-bold border border-sky-100 hover:bg-sky-100 transition-all">NSM Report</a>
                             
-                            <a href="https://dailysalesdashboard.netlify.app/" target="_blank" class="block w-full p-5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold shadow-xl hover:scale-[1.01] transition-all flex justify-between items-center italic">
+                            <!-- DSD (Public for all logged users) -->
+                            <a href="https://dailysalesdashboard.netlify.app/" target="_blank" class="block w-full p-5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold shadow-md hover:scale-[1.01] transition-all flex justify-between items-center italic">
                                 <span>DSD (Daily Sales Dashboard)</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                             </a>
 
-                            <div id="sm-card-section" class="hidden mt-8 border-t border-slate-100 pt-6">
-                                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.25em] mb-4 text-left">SM Region Reports</h3>
+                            <!-- SM Group -->
+                            <div id="sm-card" class="hidden mt-8 border-t border-slate-100 pt-6">
+                                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">SM Region Reports</h3>
                                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                     <a data-permission="OPH BBK1" href="https://lookerstudio.google.com/s/nf5e9ofQTuY" target="_blank" class="link-button hidden">OPH BBK1</a>
                                     <a data-permission="OPH BKK2" href="https://lookerstudio.google.com/s/nLjU8vYLBjU" target="_blank" class="link-button hidden">OPH BKK2</a>
@@ -129,8 +108,9 @@
                                 </div>
                             </div>
 
-                            <div id="levelup-card-section" class="hidden mt-6 border-t border-slate-100 pt-6">
-                                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.25em] mb-4 text-left">Level-Up Reports</h3>
+                            <!-- Level-Up Group -->
+                            <div id="levelup-card" class="hidden mt-6 border-t border-slate-100 pt-6">
+                                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Level-Up Reports</h3>
                                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                     <a data-permission="1MS" href="https://lookerstudio.google.com/s/qH7eSvWOJBI" target="_blank" class="link-button hidden">1MS</a>
                                     <a data-permission="1UNE" href="https://lookerstudio.google.com/s/jU5JfmVE2gQ" target="_blank" class="link-button hidden">1UNE</a>
@@ -146,46 +126,40 @@
                     </div>
                 </div>
 
-                <!-- Right: Tools & Admin -->
+                <!-- Right: Tools -->
                 <div class="space-y-6">
                     <div class="main-card p-6 space-y-4">
-                        <h2 class="text-lg font-bold text-slate-800 mb-2 font-bold">General Tools</h2>
-                        <a href="https://peletotalexpense.netlify.app/" target="_blank" class="action-button border-green-100 text-green-700 bg-green-50/50 hover:bg-green-100 transition-all">Expense Report</a>
-                        <a href="https://pelerp.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100 transition-all">Reimburse Price Calculator</a>
-                        <a href="https://pelecostcgd.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100 transition-all">Cost Price Calculator</a>
+                        <h2 class="text-lg font-bold text-slate-800 mb-2">General Tools</h2>
+                        <a href="https://peletotalexpense.netlify.app/" target="_blank" class="action-button border-green-100 text-green-700 bg-green-50/50 hover:bg-green-100">Expense Report</a>
+                        <a href="https://pelerp.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100">Reimburse Price</a>
+                        <a href="https://pelecostcgd.netlify.app/" target="_blank" class="action-button border-yellow-100 text-yellow-700 bg-yellow-50/50 hover:bg-yellow-100">Cost Price</a>
                     </div>
 
-                    <div id="admin-section-ui" class="hidden main-card p-6 border-red-200 bg-red-50/20 space-y-4">
-                        <h2 class="text-lg font-bold text-red-600 mb-2 flex items-center italic">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
-                            Admin Controls
-                        </h2>
-                        <a href="https://script.google.com/macros/s/AKfycbwK8QNsVHKO-Mp-6sc46-fdX0QWv1yYau5uOfCi-bJ1ofxG91yf9RiR7GgMx2kyXRwAUQ/exec" target="_blank" class="admin-button italic text-center text-red-900 border-red-300 shadow-sm">Upload Daily Sales Dashboard (DSD)</a>
-                        <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="action-button border-red-100 font-medium text-red-800">Upload Sales Dashboard</a>
-                        <a href="https://upload2.netlify.app/" target="_blank" class="action-button border-red-100 font-medium text-red-800">Upload Expense</a>
-                        <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="action-button border-red-100 font-medium text-red-800">Upload Doctor Adoption</a>
+                    <!-- Admin Section -->
+                    <div id="admin-section" class="hidden main-card p-6 border-red-200 bg-red-50/20 space-y-4 font-bold">
+                        <h2 class="text-lg font-bold text-red-600 mb-2 flex items-center italic">Admin Only</h2>
+                        <a href="https://script.google.com/macros/s/AKfycbwK8QNsVHKO-Mp-6sc46-fdX0QWv1yYau5uOfCi-bJ1ofxG91yf9RiR7GgMx2kyXRwAUQ/exec" target="_blank" class="admin-button italic text-center">Upload Daily Sales Dashboard (DSD)</a>
+                        <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="action-button border-red-100 text-red-800 font-bold">Upload Sales Dashboard</a>
+                        <a href="https://upload2.netlify.app/" target="_blank" class="action-button border-red-100 text-red-800 font-bold">Upload Expense</a>
+                        <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="action-button border-red-100 text-red-800 font-bold">Upload Doctor Adoption</a>
                     </div>
                 </div>
 
+                <!-- Training Row -->
                 <div class="lg:col-span-3">
                     <div class="main-card p-6 border-purple-100 bg-purple-50/10">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center font-bold">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                            Training Center
-                        </h2>
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">Training</h2>
                         <a href="https://trb-ethic-th.netlify.app/" target="_blank" class="action-button border-purple-200 text-purple-800 bg-purple-50 hover:bg-purple-100 font-bold text-center">Ethic of Sales and Marketing Practice</a>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="text-center py-10 border-t border-slate-200 bg-white">
-            <p class="text-slate-400 text-sm font-semibold italic">By Pele'</p>
-        </footer>
+        <footer class="text-center py-10 border-t border-slate-200 bg-white"><p class="text-slate-400 text-sm font-semibold italic">By Pele'</p></footer>
     </div>
 
 <script>
-    // --- DATABASE ---
+    // --- ฐานข้อมูล USER/PASSWORD จาก Google Sheet ---
     const users = [
         { username: 'Sudarat', password: 'Sudarat' },
         { username: 'Natapol S.', password: '1111' },
@@ -220,6 +194,7 @@
         { username: '5BA', password: '26101982' }
     ];
 
+    // --- ฐานข้อมูล PERMISSIONS จาก Google Sheet ---
     const permissions = [
         { username: 'Sudarat', perm: 'Admin' },
         { username: 'Natapol S.', perm: 'TRB' }, { username: 'Natapol S.', perm: 'NSM' }, { username: 'Natapol S.', perm: 'Admin' },
@@ -227,12 +202,12 @@
         { username: 'Jitladawan S.', perm: 'TRB' }, { username: 'Jitladawan S.', perm: 'NSM' },
         { username: 'Wichayada K.', perm: 'TRB' }, { username: 'Wichayada K.', perm: 'NSM' },
         { username: 'Kannika T.', perm: 'TRB' }, { username: 'Kannika T.', perm: 'NSM' },
-        { username: 'Waraporn P.', perm: 'TRB' }, { username: 'Waraporn P.', perm: 'OPH BKK1' },
+        { username: 'Waraporn P.', perm: 'TRB' }, { username: 'Waraporn P.', perm: 'OPH BBK1' },
         { username: 'Thitima K.', perm: 'TRB' }, { username: 'Thitima K.', perm: 'OPH BKK2' },
-        { username: 'Ananya C.', perm: 'TRB' }, { username: 'Ananya C.', perm: 'OPH UPC3' },
         { username: 'Patcharida P.', perm: 'TRB' }, { username: 'Patcharida P.', perm: 'OPH BKK3' },
         { username: 'Paiwan S.', perm: 'TRB' }, { username: 'Paiwan S.', perm: 'OPH UPC1' },
         { username: 'Rungtiwa K.', perm: 'TRB' }, { username: 'Rungtiwa K.', perm: 'OPH UPC2' },
+        { username: 'Ananya C.', perm: 'TRB' }, { username: 'Ananya C.', perm: 'OPH UPC3' },
         { username: 'Narumon J.', perm: 'TRB' }, { username: 'Narumon J.', perm: 'ORT BKK1' },
         { username: 'Natthida K.', perm: 'TRB' }, { username: 'Natthida K.', perm: 'ORT BKK2' },
         { username: 'Jirapa T.', perm: 'TRB' }, { username: 'Jirapa T.', perm: 'ORT UPC1' },
@@ -258,79 +233,67 @@
     const dashboardPage = document.getElementById('dashboard-page');
     const loginForm = document.getElementById('login-form');
     const loginError = document.getElementById('login-error');
-    const welcomeUserText = document.getElementById('welcome-user-text');
+    const welcomeUser = document.getElementById('welcome-user');
     const logoutBtn = document.getElementById('logout-button');
-    const smSection = document.getElementById('sm-card-section');
-    const levelupSection = document.getElementById('levelup-card-section');
-    const adminSectionUI = document.getElementById('admin-section-ui');
+    const smCard = document.getElementById('sm-card');
+    const levelupCard = document.getElementById('levelup-card');
+    const adminSection = document.getElementById('admin-section');
 
-    function setupUserPermissions(username) {
+    function updateDashboard(username) {
         const userPerms = permissions.filter(p => p.username === username).map(p => p.perm);
         document.querySelectorAll('[data-permission]').forEach(el => el.classList.add('hidden'));
-        
-        if (adminSectionUI) adminSectionUI.classList.add('hidden');
-        if (smSection) smSection.classList.add('hidden');
-        if (levelupSection) levelupSection.classList.add('hidden');
+        adminSection.classList.add('hidden');
+        smCard.classList.add('hidden');
+        levelupCard.classList.add('hidden');
 
-        let hasSM = false;
-        let hasLV = false;
+        let showSM = false, showLV = false;
 
         userPerms.forEach(p => {
             if (p === 'Admin') {
-                if (adminSectionUI) adminSectionUI.classList.remove('hidden');
+                adminSection.classList.remove('hidden');
             } else {
-                const targetElements = document.querySelectorAll(`[data-permission="${p}"]`);
-                targetElements.forEach(el => {
+                const els = document.querySelectorAll(`[data-permission="${p}"]`);
+                els.forEach(el => {
                     el.classList.remove('hidden');
-                    if (smSection && smSection.contains(el)) hasSM = true;
-                    if (levelupSection && levelupSection.contains(el)) hasLV = true;
+                    if (smCard.contains(el)) showSM = true;
+                    if (levelupCard.contains(el)) showLV = true;
                 });
             }
         });
-
-        if (hasSM && smSection) smSection.classList.remove('hidden');
-        if (hasLV && levelupSection) levelupSection.classList.remove('hidden');
+        if (showSM) smCard.classList.remove('hidden');
+        if (showLV) levelupCard.classList.remove('hidden');
     }
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            const userInput = document.getElementById('username_input').value.trim();
-            const passInput = document.getElementById('password_input').value.trim();
-            
-            // ปรับการเปรียบเทียบให้เป็น String ทั้งหมดเพื่อรองรับรหัสผ่านที่เป็นตัวเลข
-            const foundUser = users.find(u => 
-                u.username.toLowerCase() === userInput.toLowerCase() && 
-                u.password.toString() === passInput
-            );
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const u = document.getElementById('username_input').value.trim();
+        const p = document.getElementById('password_input').value.trim();
+        
+        // เปรียบเทียบ Username แบบไม่สนตัวเล็ก/ใหญ่ และแปลงรหัสผ่านเป็น String เพื่อรองรับ "1111"
+        const found = users.find(user => 
+            user.username.toLowerCase() === u.toLowerCase() && 
+            user.password.toString().trim() === p
+        );
 
-            if (foundUser) {
-                loginError.classList.add('hidden');
-                loginPage.classList.add('hidden');
-                dashboardPage.classList.remove('hidden');
-                welcomeUserText.textContent = `Cost Center: ${foundUser.username}`;
-                setupUserPermissions(foundUser.username);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                loginError.classList.remove('hidden');
-                document.getElementById('password_input').value = ""; 
-            }
-        });
-    }
+        if (found) {
+            loginError.classList.add('hidden');
+            loginPage.classList.add('hidden');
+            dashboardPage.classList.remove('hidden');
+            welcomeUser.textContent = `User: ${found.username}`;
+            updateDashboard(found.username);
+            window.scrollTo(0, 0);
+        } else {
+            loginError.classList.remove('hidden');
+            document.getElementById('password_input').value = "";
+        }
+    });
 
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            dashboardPage.classList.add('hidden');
-            loginPage.classList.remove('hidden');
-            loginForm.reset();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-
-    window.onload = () => {
-        const uInput = document.getElementById('username_input');
-        if (uInput) uInput.focus();
-    };
+    logoutBtn.addEventListener('click', () => {
+        dashboardPage.classList.add('hidden');
+        loginPage.classList.remove('hidden');
+        loginForm.reset();
+        window.scrollTo(0, 0);
+    });
 </script>
 </body>
 </html>
