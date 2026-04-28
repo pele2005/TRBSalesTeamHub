@@ -91,6 +91,12 @@
                                <a id="btn-trb" href="https://lookerstudio.google.com/s/rT4GtU_qT1A" target="_blank" class="hidden main-button bg-blue-50 hover:bg-blue-100 text-blue-800">TRB</a>
                                <a id="btn-nsm" href="https://lookerstudio.google.com/s/miTvSeHsp0k" target="_blank" class="hidden main-button bg-blue-50 hover:bg-blue-100 text-blue-800">NSM</a>
                             </div>
+
+                            <!-- New DSD Button: ให้สิทธิ์ทุกคนที่ Login ได้เห็นปุ่มนี้เสมอ -->
+                            <div class="pt-2">
+                                <a href="https://dailysalesdashboard.netlify.app/" target="_blank" class="main-button bg-sky-100 hover:bg-sky-200 text-sky-900 border border-sky-200 italic shadow-sm">DSD (Daily Sales Dashboard)</a>
+                            </div>
+
                             <div id="sm-section" class="hidden pt-2">
                                <h3 class="font-semibold text-slate-600 mb-2 mt-4">SM</h3>
                                <div id="sm-buttons-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
@@ -142,6 +148,9 @@
                                 <h2 class="text-xl font-bold text-slate-700">Admin</h2>
                             </div>
                              <div class="flex flex-col space-y-3">
+                                <!-- New Upload DSD Button for Admin -->
+                                <a href="https://script.google.com/macros/s/AKfycbwK8QNsVHKO-Mp-6sc46-fdX0QWv1yYau5uOfCi-bJ1ofxG91yf9RiR7GgMx2kyXRwAUQ/exec" target="_blank" class="main-button bg-red-100 hover:bg-red-200 text-red-900 font-bold italic shadow-sm">Upload Daily Sales Dashboard (DSD)</a>
+
                                 <a href="https://uploadgooglesheet.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Sales Dashboard</a>
                                 <a href="https://upload2.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Expense</a>
                                 <a href="https://uploaddoctoradoption.netlify.app/" target="_blank" class="main-button bg-red-50 hover:bg-red-100 text-red-800">Upload Doctor Adoption</a>
@@ -198,8 +207,8 @@
         "OPH BKK2": "https://lookerstudio.google.com/s/nLjU8vYLBjU",
         "OPH BKK3": "https://lookerstudio.google.com/s/ieT7jRp5MVE",
         "OPH UPC1": "https://lookerstudio.google.com/s/jsaNc5ovXnM",
-        "OPH UPC2": "https://lookerstudio.google.com/s/gWTmEuEA2JE", // Corrected for Ananya C.
-        "OPH UPC3": "https://lookerstudio.google.com/s/u2uneSnAKGI", // Corrected for Surachai L.
+        "OPH UPC2": "https://lookerstudio.google.com/s/gWTmEuEA2JE", 
+        "OPH UPC3": "https://lookerstudio.google.com/s/u2uneSnAKGI", 
         "ORT BKK1": "https://lookerstudio.google.com/s/tPqpj7eqjVc",
         "ORT BKK2": "https://lookerstudio.google.com/s/o0WZZ5eydZk",
         "ORT UPC1": "https://lookerstudio.google.com/s/sa1_WyEamRY",
@@ -207,7 +216,6 @@
         "OTC BKK": "https://lookerstudio.google.com/s/ls0kNEMzk8s",
         "OTC UPC": "https://lookerstudio.google.com/s/oECb4s4seqI",
     };
-    // --- END: LINK CORRECTION ---
     
     const levelUpMap = {
         "1MS": "https://lookerstudio.google.com/s/qH7eSvWOJBI",
@@ -233,7 +241,9 @@
         if (!user || !user.permissions) { return; }
         const { permissions } = user;
         
-        salesDashboardCard.classList.add('hidden');
+        // Hide logic - but we always show salesDashboardCard now because DSD is public
+        salesDashboardCard.classList.remove('hidden'); 
+        
         adminCard.classList.add('hidden');
         btnTrb.classList.add('hidden');
         btnNsm.classList.add('hidden');
@@ -242,28 +252,24 @@
         smButtonsContainer.innerHTML = '';
         levelupButtonsContainer.innerHTML = '';
 
-        let hasSalesContent = false;
         welcomeUser.textContent = `ยินดีต้อนรับ, ${user.username}`;
 
         if (permissions.showAdmin) adminCard.classList.remove('hidden');
-        if (permissions.showTRB) { btnTrb.classList.remove('hidden'); hasSalesContent = true; }
-        if (permissions.showNSM) { btnNsm.classList.remove('hidden'); hasSalesContent = true; }
+        if (permissions.showTRB) btnTrb.classList.remove('hidden');
+        if (permissions.showNSM) btnNsm.classList.remove('hidden');
 
         if (permissions.sm && permissions.sm.length > 0) {
             permissions.sm.forEach(smKey => {
                 if (smMap[smKey]) smButtonsContainer.appendChild(createButton(smKey, smMap[smKey]));
             });
             smSection.classList.remove('hidden');
-            hasSalesContent = true;
         }
         if (permissions.levelUp && permissions.levelUp.length > 0) {
             permissions.levelUp.forEach(levelUpKey => {
                 if (levelUpMap[levelUpKey]) levelupButtonsContainer.appendChild(createButton(levelUpKey, levelUpMap[levelUpKey]));
             });
             levelupSection.classList.remove('hidden');
-            hasSalesContent = true;
         }
-        if (hasSalesContent) salesDashboardCard.classList.remove('hidden');
     }
 
     async function handleLogin(event) {
@@ -321,4 +327,3 @@
 
 </body>
 </html>
-
